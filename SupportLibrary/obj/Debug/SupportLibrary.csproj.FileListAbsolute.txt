@@ -8,3 +8,8 @@ C:\Users\asus\Documents\GitHub\GameLaunscher\SupportLibrary\bin\Debug\SupportLib
 C:\Users\asus\Documents\GitHub\GameLaunscher\SupportLibrary\obj\Debug\SupportLibrary.csprojResolveAssemblyReference.cache
 C:\Users\asus\Documents\GitHub\GameLaunscher\SupportLibrary\obj\Debug\SupportLibrary.dll
 C:\Users\asus\Documents\GitHub\GameLaunscher\SupportLibrary\obj\Debug\SupportLibrary.pdb
+C:\Users\Silen\OneDrive\Dokumenty\GitHub\GameLaunscher\SupportLibrary\bin\Debug\SupportLibrary.dll
+C:\Users\Silen\OneDrive\Dokumenty\GitHub\GameLaunscher\SupportLibrary\bin\Debug\SupportLibrary.pdb
+C:\Users\Silen\OneDrive\Dokumenty\GitHub\GameLaunscher\SupportLibrary\obj\Debug\SupportLibrary.csprojResolveAssemblyReference.cache
+C:\Users\Silen\OneDrive\Dokumenty\GitHub\GameLaunscher\SupportLibrary\obj\Debug\SupportLibrary.dll
+C:\Users\Silen\OneDrive\Dokumenty\GitHub\GameLaunscher\SupportLibrary\obj\Debug\SupportLibrary.pdb
