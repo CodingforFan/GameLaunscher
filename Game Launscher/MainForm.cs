@@ -11,6 +11,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using SupportLibrary;
+//kaďák
 
 namespace Game_Launscher
 {
