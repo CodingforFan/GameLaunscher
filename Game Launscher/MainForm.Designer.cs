@@ -335,8 +335,8 @@ namespace Game_Launscher
 			this.button5.Size = new System.Drawing.Size(20, 20);
 			this.button5.TabIndex = 13;
 			this.button5.UseVisualStyleBackColor = false;
-			this.button5.MouseDown += this.Button5MouseDown;
-			this.button5.MouseUp += this.Button5MouseUp;
+			this.button5.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button5MouseDown);
+			this.button5.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button5MouseUp);
 			// 
 			// resize
 			// 
@@ -347,7 +347,6 @@ namespace Game_Launscher
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-			this.AutoSize = true;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.BackColor = System.Drawing.SystemColors.GrayText;
 			this.BackgroundImage = global::Game_Launscher.Resource1.Background_01;
@@ -370,7 +369,6 @@ namespace Game_Launscher
 			this.menuStrip1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
-			this.Activated += MainForm_Active;
 
 		}
 	}

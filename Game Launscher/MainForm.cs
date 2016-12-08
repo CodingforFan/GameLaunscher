@@ -11,6 +11,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using SupportLibrary;
+using System.Collections.Generic;
 
 namespace Game_Launscher
 {
@@ -22,7 +23,7 @@ namespace Game_Launscher
 		public List<string> datas = new List<string>();
 		public System.IO.StreamReader sr;
 		public System.IO.StreamWriter sw;
-		public List<string> saveTime;
+		public List <string> saveTime;
 		public bool gameIsRun = false;
 		public int activeGame = -1;
 		public string processName;
@@ -166,7 +167,6 @@ namespace Game_Launscher
 			openFileDialog2.ShowDialog();
 		}
 		
-<<<<<<< HEAD
 		void Button5MouseDown(object sender, EventArgs e)
 		{
 			resize.Start();
@@ -174,15 +174,16 @@ namespace Game_Launscher
 		
 		void Button5MouseUp(object sender, EventArgs e)
 		{
-			//resize.Stop();
+			resize.Stop();
+			Size = new Size (MainForm.MousePosition.X - Location.X , MainForm.MousePosition.Y - Location.Y);
+			
 		}
 		
 		void ResizeTick(object sender, EventArgs e)
 		{
-			Size = new Size (MainForm.MousePosition.X, MainForm.MousePosition.Y);
+			Size = new Size (MainForm.MousePosition.X - Location.X , MainForm.MousePosition.Y - Location.Y);
 		}
 
-=======
 		void MainForm_Active(object sender, EventArgs e){
 			if(gameIsRun){
 				if(process.HasExited){
@@ -277,6 +278,5 @@ namespace Game_Launscher
 			saveTime.Add(sets.Split(';')[1]);
 			saveTime.Add(sets.Split(';')[2]);
 		}
->>>>>>> origin/master
 	}
 }
