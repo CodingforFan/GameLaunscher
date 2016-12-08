@@ -517,3 +517,4 @@ Game Launscher/bin/Debug/Game Launscher.exe
 SupportLibrary/obj/Debug/SupportLibrary.csprojResolveAssemblyReference.cache
 SupportLibrary/obj/Debug/SupportLibrary.csprojResolveAssemblyReference.cache
 *.cache
+*.Cache
