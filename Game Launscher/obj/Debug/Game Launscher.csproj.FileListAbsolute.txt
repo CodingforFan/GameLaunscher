@@ -29,3 +29,14 @@ C:\Users\asus\Documents\GitHub\GameLaunscher\Game Launscher\obj\Debug\Game_Launs
 C:\Users\asus\Documents\GitHub\GameLaunscher\Game Launscher\obj\Debug\Game Launscher.csproj.GenerateResource.Cache
 C:\Users\asus\Documents\GitHub\GameLaunscher\Game Launscher\obj\Debug\Game Launscher.exe
 C:\Users\asus\Documents\GitHub\GameLaunscher\Game Launscher\obj\Debug\Game Launscher.pdb
+C:\Users\Silen\OneDrive\Dokumenty\GitHub\GameLaunscher\Game Launscher\bin\Debug\Game Launscher.exe.config
+C:\Users\Silen\OneDrive\Dokumenty\GitHub\GameLaunscher\Game Launscher\bin\Debug\Game Launscher.exe
+C:\Users\Silen\OneDrive\Dokumenty\GitHub\GameLaunscher\Game Launscher\bin\Debug\Game Launscher.pdb
+C:\Users\Silen\OneDrive\Dokumenty\GitHub\GameLaunscher\Game Launscher\bin\Debug\SupportLibrary.dll
+C:\Users\Silen\OneDrive\Dokumenty\GitHub\GameLaunscher\Game Launscher\bin\Debug\SupportLibrary.pdb
+C:\Users\Silen\OneDrive\Dokumenty\GitHub\GameLaunscher\Game Launscher\obj\Debug\Game Launscher.csprojResolveAssemblyReference.cache
+C:\Users\Silen\OneDrive\Dokumenty\GitHub\GameLaunscher\Game Launscher\obj\Debug\Game_Launscher.MainForm.resources
+C:\Users\Silen\OneDrive\Dokumenty\GitHub\GameLaunscher\Game Launscher\obj\Debug\Game_Launscher.Resource1.resources
+C:\Users\Silen\OneDrive\Dokumenty\GitHub\GameLaunscher\Game Launscher\obj\Debug\Game Launscher.csproj.GenerateResource.Cache
+C:\Users\Silen\OneDrive\Dokumenty\GitHub\GameLaunscher\Game Launscher\obj\Debug\Game Launscher.exe
+C:\Users\Silen\OneDrive\Dokumenty\GitHub\GameLaunscher\Game Launscher\obj\Debug\Game Launscher.pdb
