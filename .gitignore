@@ -17,6 +17,8 @@ Game Launscher\bin\Debug\
 Game Launscher\obj\Debug\
 SupportLibrary\bin\Debug\
 SupportLibrary\obj\Debug\
+Game Launscher\obj\Debug\*.cache
+SupportLibrary\obj\Debug\*.cache
 
 #################
 ## Eclipse
