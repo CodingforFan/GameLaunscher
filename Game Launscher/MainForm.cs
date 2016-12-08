@@ -14,9 +14,7 @@ using SupportLibrary;
 
 namespace Game_Launscher
 {
-	/// <summary>
-	/// Description of MainForm.
-	/// </summary>
+
 	public partial class MainForm : Form // nasrat já nic srát nebudu
 	{
 		static string current_item_name = null;
@@ -24,12 +22,9 @@ namespace Game_Launscher
 		
 		public MainForm()
 		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
+
 			InitializeComponent();
-			
-			
+
 		}
 		
 		void MainFormLoad(object sender, EventArgs e)

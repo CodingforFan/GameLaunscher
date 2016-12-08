@@ -10,15 +10,7 @@ using System;
 
 namespace SupportLibrary
 {
-<<<<<<< HEAD
-	//jaja
-	//using
-=======
-	//něco
->>>>>>> origin/master
-	//bemdr
-	//88
-	
+
 	public class Support
 	{
 		static string  name ="./Log/Log["+DateTime.Now.ToString("HH;mm;ss")+"].txt";
