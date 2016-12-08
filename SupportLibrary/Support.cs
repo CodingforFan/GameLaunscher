@@ -10,6 +10,7 @@ using System;
 
 namespace SupportLibrary
 {
+	//bemdr
 	
 	public class Support
 	{
@@ -19,6 +20,7 @@ namespace SupportLibrary
 			string time = DateTime.Now.ToString("HH:mm");
 			if (!System.IO.File.Exists(name))
 			{
+				
                 System.Windows.Forms.MessageBox.Show("Test"+time);
                 System.IO.Directory.CreateDirectory("./Log");
                 System.IO.FileStream fs = System.IO.File.Create(name);
