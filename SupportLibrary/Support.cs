@@ -10,8 +10,12 @@ using System;
 
 namespace SupportLibrary
 {
+<<<<<<< HEAD
 	//jaja
 	//using
+=======
+	//něco
+>>>>>>> origin/master
 	//bemdr
 	//88
 	

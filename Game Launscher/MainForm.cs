@@ -11,14 +11,13 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using SupportLibrary;
-//kaďák
 
 namespace Game_Launscher
 {
 	/// <summary>
 	/// Description of MainForm.
 	/// </summary>
-	public partial class MainForm : Form
+	public partial class MainForm : Form // nasrat já nic srát nebudu
 	{
 		static string current_item_name = null;
 		static Control current_item = null;
