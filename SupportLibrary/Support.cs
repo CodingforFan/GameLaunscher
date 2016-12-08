@@ -10,6 +10,7 @@ using System;
 
 namespace SupportLibrary
 {
+	//něco
 	//bemdr
 	//88
 	
