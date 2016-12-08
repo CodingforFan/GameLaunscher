@@ -20,7 +20,7 @@ namespace Game_Launscher
 	{
 		static string current_item_name = null;
 		static Control current_item = null;
-		public List<string> datas = new List<string>();
+		public List <string> datas = new List<string>();
 		public System.IO.StreamReader sr;
 		public System.IO.StreamWriter sw;
 		public List <string> saveTime;
