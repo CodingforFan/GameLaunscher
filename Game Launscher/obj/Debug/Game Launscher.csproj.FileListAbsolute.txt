@@ -1,0 +1,20 @@
+C:\Users\asus\Documents\SharpDevelop Projects\Game Launscher\Game Launscher\bin\Debug\Game Launscher.exe.config
+C:\Users\asus\Documents\SharpDevelop Projects\Game Launscher\Game Launscher\bin\Debug\Game Launscher.exe
+C:\Users\asus\Documents\SharpDevelop Projects\Game Launscher\Game Launscher\bin\Debug\Game Launscher.pdb
+C:\Users\asus\Documents\SharpDevelop Projects\Game Launscher\Game Launscher\obj\Debug\Game Launscher.csprojResolveAssemblyReference.cache
+C:\Users\asus\Documents\SharpDevelop Projects\Game Launscher\Game Launscher\obj\Debug\Game_Launscher.MainForm.resources
+C:\Users\asus\Documents\SharpDevelop Projects\Game Launscher\Game Launscher\obj\Debug\Game Launscher.csproj.GenerateResource.Cache
+C:\Users\asus\Documents\SharpDevelop Projects\Game Launscher\Game Launscher\obj\Debug\Game Launscher.exe
+C:\Users\asus\Documents\SharpDevelop Projects\Game Launscher\Game Launscher\obj\Debug\Game Launscher.pdb
+C:\Users\asus\Documents\SharpDevelop Projects\Game Launscher\Game Launscher\obj\Debug\Game_Launscher.Resource1.resources
+C:\Users\asus\Desktop\Ostatní\Projekty\SharpDevelopC#\Game Launscher\Game Launscher\bin\Debug\Game Launscher.exe.config
+C:\Users\asus\Desktop\Ostatní\Projekty\SharpDevelopC#\Game Launscher\Game Launscher\bin\Debug\Game Launscher.exe
+C:\Users\asus\Desktop\Ostatní\Projekty\SharpDevelopC#\Game Launscher\Game Launscher\bin\Debug\Game Launscher.pdb
+C:\Users\asus\Desktop\Ostatní\Projekty\SharpDevelopC#\Game Launscher\Game Launscher\obj\Debug\Game Launscher.csprojResolveAssemblyReference.cache
+C:\Users\asus\Desktop\Ostatní\Projekty\SharpDevelopC#\Game Launscher\Game Launscher\obj\Debug\Game_Launscher.MainForm.resources
+C:\Users\asus\Desktop\Ostatní\Projekty\SharpDevelopC#\Game Launscher\Game Launscher\obj\Debug\Game_Launscher.Resource1.resources
+C:\Users\asus\Desktop\Ostatní\Projekty\SharpDevelopC#\Game Launscher\Game Launscher\obj\Debug\Game Launscher.csproj.GenerateResource.Cache
+C:\Users\asus\Desktop\Ostatní\Projekty\SharpDevelopC#\Game Launscher\Game Launscher\obj\Debug\Game Launscher.exe
+C:\Users\asus\Desktop\Ostatní\Projekty\SharpDevelopC#\Game Launscher\Game Launscher\obj\Debug\Game Launscher.pdb
+C:\Users\asus\Desktop\Ostatní\Projekty\SharpDevelopC#\Game Launscher\Game Launscher\bin\Debug\SupportLibrary.dll
+C:\Users\asus\Desktop\Ostatní\Projekty\SharpDevelopC#\Game Launscher\Game Launscher\bin\Debug\SupportLibrary.pdb
