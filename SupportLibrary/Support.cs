@@ -13,13 +13,14 @@ namespace SupportLibrary
 	
 	public class Support
 	{
-		static string  name ="./Log["+DateTime.Now.ToString("HH;mm;ss")+"].txt";
+		static string  name ="./Log/Log["+DateTime.Now.ToString("HH;mm;ss")+"].txt";
 		public static void Log(string b)
         {
 			string time = DateTime.Now.ToString("HH:mm");
 			if (!System.IO.File.Exists(name))
 			{
                 System.Windows.Forms.MessageBox.Show("Test"+time);
+                System.IO.Directory.CreateDirectory("./Log");
                 System.IO.FileStream fs = System.IO.File.Create(name);
                 fs.Close();
 			}

@@ -21,7 +21,6 @@ namespace Game_Launscher
 	{
 		static string current_item_name = null;
 		static Control current_item = null;
-		string test = "";//je to jen test
 		
 		public MainForm()
 		{
@@ -35,22 +34,20 @@ namespace Game_Launscher
 		
 		void MainFormLoad(object sender, EventArgs e)
 		{
-			Support.Log("Start");//suportí
+			Support.Log("Start");
 		}
 		
 		void Button1Click(object sender, EventArgs e)
 		{
-			//dsdddsdsd
+
 			openFileDialog1.ShowDialog();
 			Support.Log("Open File Dialog 1");
-			//ds ad ad555565665556
 			
 		}
 		void OpenFileDialog1FileOk(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			foreach(string a in openFileDialog1.FileNames)
 			{
-				//sadasdasdasa
 				foreach ( Control c1 in flowLayoutPanel1.Controls ) {
 					if (c1.Name.Contains(a)){
 						goto pidano;
@@ -59,7 +56,6 @@ namespace Game_Launscher
 				
 				if (a.Contains(".exe")){
 
-					
 					PictureBox pb = new PictureBox {Name = a,Size = new Size(300,150),BackgroundImageLayout = ImageLayout.Zoom, BackgroundImage = Icon.ExtractAssociatedIcon(a).ToBitmap()};
 					pb.MouseClick += Item_Click;
 					
