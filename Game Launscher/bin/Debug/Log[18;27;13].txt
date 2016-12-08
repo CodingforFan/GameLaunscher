@@ -1,3 +1,0 @@
-
-18:27 -> Start
-18:27 -> Open File Dialog 1
