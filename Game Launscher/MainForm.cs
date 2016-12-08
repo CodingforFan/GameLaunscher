@@ -141,6 +141,21 @@ namespace Game_Launscher
 		{
 			openFileDialog2.ShowDialog();
 		}
+		
+		void Button5MouseDown(object sender, EventArgs e)
+		{
+			resize.Start();
+		}
+		
+		void Button5MouseUp(object sender, EventArgs e)
+		{
+			//resize.Stop();
+		}
+		
+		void ResizeTick(object sender, EventArgs e)
+		{
+			Size = new Size (MainForm.MousePosition.X, MainForm.MousePosition.Y);
+		}
 
 	}
 }

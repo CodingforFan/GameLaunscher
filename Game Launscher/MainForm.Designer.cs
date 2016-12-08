@@ -34,6 +34,8 @@ namespace Game_Launscher
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem7;
 		private System.Windows.Forms.MenuStrip menuStrip1;
+		private System.Windows.Forms.Button button5;
+		private System.Windows.Forms.Timer resize;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -77,6 +79,8 @@ namespace Game_Launscher
 			this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+			this.button5 = new System.Windows.Forms.Button();
+			this.resize = new System.Windows.Forms.Timer(this.components);
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -280,7 +284,7 @@ namespace Game_Launscher
 			this.toolStripMenuItem2.ForeColor = System.Drawing.SystemColors.Control;
 			this.toolStripMenuItem2.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-			this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+			this.toolStripMenuItem2.Size = new System.Drawing.Size(80, 22);
 			this.toolStripMenuItem2.Text = "1";
 			this.toolStripMenuItem2.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
 			// 
@@ -289,7 +293,7 @@ namespace Game_Launscher
 			this.toolStripMenuItem3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.toolStripMenuItem3.ForeColor = System.Drawing.SystemColors.Control;
 			this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-			this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+			this.toolStripMenuItem3.Size = new System.Drawing.Size(80, 22);
 			this.toolStripMenuItem3.Text = "2";
 			this.toolStripMenuItem3.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
 			// 
@@ -300,7 +304,7 @@ namespace Game_Launscher
 			this.toolStripMenuItem4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.toolStripMenuItem4.ForeColor = System.Drawing.SystemColors.Control;
 			this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-			this.toolStripMenuItem4.Size = new System.Drawing.Size(152, 22);
+			this.toolStripMenuItem4.Size = new System.Drawing.Size(80, 22);
 			this.toolStripMenuItem4.Text = "3";
 			this.toolStripMenuItem4.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
 			// 
@@ -309,28 +313,56 @@ namespace Game_Launscher
 			this.toolStripMenuItem5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.toolStripMenuItem5.ForeColor = System.Drawing.SystemColors.Control;
 			this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-			this.toolStripMenuItem5.Size = new System.Drawing.Size(152, 22);
+			this.toolStripMenuItem5.Size = new System.Drawing.Size(80, 22);
 			this.toolStripMenuItem5.Text = "4";
 			this.toolStripMenuItem5.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
 			// 
+			// button5
+			// 
+			this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button5.BackColor = System.Drawing.Color.Transparent;
+			this.button5.BackgroundImage = global::Game_Launscher.Resource1.UI_7;
+			this.button5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+			this.button5.Cursor = System.Windows.Forms.Cursors.SizeNWSE;
+			this.button5.FlatAppearance.BorderSize = 0;
+			this.button5.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+			this.button5.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+			this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.button5.ForeColor = System.Drawing.Color.Transparent;
+			this.button5.Location = new System.Drawing.Point(680, 280);
+			this.button5.Margin = new System.Windows.Forms.Padding(0);
+			this.button5.Name = "button5";
+			this.button5.Size = new System.Drawing.Size(20, 20);
+			this.button5.TabIndex = 13;
+			this.button5.UseVisualStyleBackColor = false;
+			this.button5.MouseDown += this.Button5MouseDown;
+			this.button5.MouseUp += this.Button5MouseUp;
+			// 
+			// resize
+			// 
+			this.resize.Interval = 1;
+			this.resize.Tick += new System.EventHandler(this.ResizeTick);
+			// 
 			// MainForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
 			this.AutoSize = true;
+			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.BackColor = System.Drawing.SystemColors.GrayText;
 			this.BackgroundImage = global::Game_Launscher.Resource1.Background_01;
 			this.ClientSize = new System.Drawing.Size(700, 300);
+			this.Controls.Add(this.button5);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.button3);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.button4);
-			this.Controls.Add(this.flowLayoutPanel1);
 			this.Controls.Add(this.menuStrip1);
+			this.Controls.Add(this.flowLayoutPanel1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+			this.MinimumSize = new System.Drawing.Size(700, 300);
 			this.Name = "MainForm";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Game Launscher";
 			this.Load += new System.EventHandler(this.MainFormLoad);
 			this.contextMenuStrip1.ResumeLayout(false);
