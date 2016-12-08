@@ -19,6 +19,14 @@ namespace Game_Launscher
 	{
 		static string current_item_name = null;
 		static Control current_item = null;
+		public List<string> datas = new List<string>();
+		public System.IO.StreamReader sr;
+		public System.IO.StreamWriter sw;
+		public List<string> saveTime;
+		public bool gameIsRun = false;
+		public int activeGame = -1;
+		public string processName;
+		public System.Diagnostics.Process process;
 		
 		public MainForm()
 		{
@@ -30,6 +38,22 @@ namespace Game_Launscher
 		void MainFormLoad(object sender, EventArgs e)
 		{
 			Support.Log("Start");
+			if(System.IO.File.Exists("./Data.glconfig")){
+				sr = new System.IO.StreamReader("./Data.glconfig");
+				if(sr.ReadToEnd().Length > 0){
+					var poc = System.IO.File.ReadAllLines("./Data.glconfig").Length;
+					for(int i = 0; i < poc; i++){
+						if(datas.Count > i){
+							datas[i] = sr.ReadLine();
+						}else{
+							datas.Add(sr.ReadLine());
+						}
+					}
+				}
+				sr.Close();
+			}else{
+				System.IO.File.CreateText("./Data.glconfig").Close();
+			}
 		}
 		
 		void Button1Click(object sender, EventArgs e)
@@ -141,6 +165,100 @@ namespace Game_Launscher
 		{
 			openFileDialog2.ShowDialog();
 		}
-
+		
+		void MainForm_Active(object sender, EventArgs e){
+			if(gameIsRun){
+				if(process.HasExited){
+					gameIsRun = false;
+					if(datas.Count > activeGame){
+						if(datas[activeGame] != null){
+							datas[activeGame].Replace("=" + datas[activeGame].Split('=')[1], "=" + HowLongPlay(datas[activeGame].Split('=')[1]));
+						}else{
+							datas[activeGame] = processName.Replace(".exe", string.Empty) + "=" + HowLongPlay("00;00;00");
+						}
+					}else{
+						for(int i = 0; i <= activeGame; i++){
+							if(i == activeGame){
+								datas.Add(processName.Replace(".exe", string.Empty) + "=" + HowLongPlay("00;00;00"));
+							}else{
+								datas.Add("");
+							}
+						}
+					}
+					activeGame = -1;
+					SaveData();
+				}
+			}
+		}
+		
+		public void SaveData(){
+			if(System.IO.File.Exists("./Data.glconfig")){
+				sw = new System.IO.StreamWriter("./Data.glconfig", false);
+				for(int i = 0; i < datas.Count; i++){
+					sw.WriteLine(datas[i]);
+				}
+				sw.Close();
+			}else{
+				sw = System.IO.File.CreateText("./Data.glconfig");
+				for(int i = 0; i < datas.Count; i++){
+					sw.WriteLine(datas[i]);
+				}
+				sw.Close();
+			}
+		}
+		
+		public string HowLongPlay(string lastPlayeTime){
+			List<string> nowTime = new List<string>();
+			var sets = DateTime.Now.ToString("HH;mm;ss");
+			nowTime.Add(sets.Split(';')[0]);
+			nowTime.Add(sets.Split(';')[1]);
+			nowTime.Add(sets.Split(';')[2]);
+			int num = 0;
+			string h = "00";
+			string m = "00";
+			string s = "00";
+			foreach(string one in lastPlayeTime.Split(';')){
+				int nt = int.Parse(nowTime[num]);
+				int st = int.Parse(saveTime[num]);
+				int o = int.Parse(one);
+				int hp = int.Parse(h);
+				int mp = int.Parse(m);
+				if(num == 0){
+					if(nt >= st){
+						h = (o + (nt - st)).ToString();
+					}else{
+						h = (o + (24 - st + nt)).ToString();
+					}
+				}else if(num == 1){
+					if(nt >= st){
+						m = (o + (nt - st)).ToString();
+					}else{
+						m = (o + (60 - st + nt)).ToString();
+						h = (hp - 1).ToString();
+					}
+				}else if(num == 2){
+					if(nt >= st){
+						s = (o + (nt - st)).ToString();
+					}else{
+						s = (o + (60 - st + nt)).ToString();
+						m = (mp - 1).ToString();
+					}
+				}
+				num++;
+			}
+			return (h + ";" + m + ";" + s);
+		}
+		
+		public void ButtonSet(string path, int ID){
+			gameIsRun = true;
+			process = System.Diagnostics.Process.Start(path);
+			processName = process.ProcessName;
+			activeGame = ID;
+			saveTime = new List<string>();
+			var sets = DateTime.Now.ToString("HH;mm;ss");
+			saveTime.Add(sets.Split(';')[0]);
+			saveTime.Add(sets.Split(';')[1]);
+			saveTime.Add(sets.Split(';')[2]);
+		}
 	}
 }
