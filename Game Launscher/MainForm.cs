@@ -23,6 +23,7 @@ namespace Game_Launscher
 	{
 		static string current_item_name = null;
 		static Control current_item = null;
+		string test = "";//je to jen test
 		
 		public MainForm()
 		{
@@ -36,7 +37,7 @@ namespace Game_Launscher
 		
 		void MainFormLoad(object sender, EventArgs e)
 		{
-			Support.Log("Start");
+			Support.Log("Start");//suportí
 		}
 		
 		void Button1Click(object sender, EventArgs e)
