@@ -1,10 +1,10 @@
 #################
 ## Foldest
 #################
-Game Launscher\bin\Debug\
-Game Launscher\obj\Debug\
-SupportLibrary\bin\Debug\
-SupportLibrary\obj\Debug\
+Game Launscher\bin\Debug\*
+Game Launscher\obj\Debug\*
+SupportLibrary\bin\Debug\*
+SupportLibrary\obj\Debug\*
 
 #################
 ## Eclipse
