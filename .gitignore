@@ -17,7 +17,10 @@ Game Launscher\bin\
 Game Launscher\obj\
 SupportLibrary\bin\
 SupportLibrary\obj\
-
+Game Launscher\Game Launscher\bin\*
+Game Launscher\Game Launscher\obj\*
+Game Launscher\SupportLibrary\bin\*
+Game Launscher\SupportLibrary\obj\*
 
 
 
