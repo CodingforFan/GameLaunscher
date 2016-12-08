@@ -7,12 +7,10 @@
  * Tento template můžete změnit pomocí Nástroje | Možnosti | Psaní kódu | Upravit standardní hlavičky souborů.
  */
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using SupportLibrary;
-using System.Management;
 
 namespace Game_Launscher
 {
@@ -42,16 +40,17 @@ namespace Game_Launscher
 		
 		void Button1Click(object sender, EventArgs e)
 		{
-			
+			//dsdddsdsd
 			openFileDialog1.ShowDialog();
 			Support.Log("Open File Dialog 1");
-			
+			//ds ad ad
 			
 		}
 		void OpenFileDialog1FileOk(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			foreach(string a in openFileDialog1.FileNames)
 			{
+				//sadasdasdasa
 				foreach ( Control c1 in flowLayoutPanel1.Controls ) {
 					if (c1.Name.Contains(a)){
 						goto pidano;
