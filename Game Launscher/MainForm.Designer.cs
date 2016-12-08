@@ -370,6 +370,7 @@ namespace Game_Launscher
 			this.menuStrip1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
+			this.Activated += MainForm_Active;
 
 		}
 	}
