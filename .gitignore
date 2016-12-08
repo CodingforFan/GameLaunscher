@@ -1,24 +1,22 @@
 #################
 ## Folders
 #################
-Game Launscher\bin\Debug\*
-Game Launscher\obj\Debug\*
-SupportLibrary\bin\Debug\*
-SupportLibrary\obj\Debug\*
-Game Launscher\bin\Debug
-Game Launscher\obj\Debug
-SupportLibrary\bin\Debug
-SupportLibrary\obj\Debug
-Game Launscher\bin\Debug*
-Game Launscher\obj\Debug*
-SupportLibrary\bin\Debug*
-SupportLibrary\obj\Debug*
-Game Launscher\bin\Debug\
-Game Launscher\obj\Debug\
-SupportLibrary\bin\Debug\
-SupportLibrary\obj\Debug\
-Game Launscher\obj\Debug\*.cache
-SupportLibrary\obj\Debug\*.cache
+Game Launscher\bin\*
+Game Launscher\obj\*
+SupportLibrary\bin\*
+SupportLibrary\obj\*
+Game Launscher\bin
+Game Launscher\obj
+SupportLibrary\bin
+SupportLibrary\obj
+Game Launscher\bin*
+Game Launscher\obj*
+SupportLibrary\bin*
+SupportLibrary\obj*
+Game Launscher\bin\
+Game Launscher\obj\
+SupportLibrary\bin\
+SupportLibrary\obj\
 
 #################
 ## Eclipse
