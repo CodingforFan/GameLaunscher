@@ -77,6 +77,7 @@ namespace Game_Launscher
 				if (a.Contains(".exe")){
 
 					PictureBox pb = new PictureBox {Name = a,Size = new Size(300,150),BackgroundImageLayout = ImageLayout.Zoom, BackgroundImage = Icon.ExtractAssociatedIcon(a).ToBitmap()};
+					pb.Tag = flowLayoutPanel1.Controls.Count.ToString();
 					pb.MouseClick += Item_Click;
 					
 					Label lb = new Label {Name = a + "1", Text = Path.GetFileName(a).Replace(".exe", string.Empty)};
@@ -116,7 +117,7 @@ namespace Game_Launscher
 			current_item_name = Path.GetFileName(current_item.Name);
 			
 			if (e.Button == MouseButtons.Left){
-				System.Diagnostics.Process.Start(current_item.Name);	
+				ButtonSet(System.Diagnostics.Process.Start(current_item.Name), int.Parse(current_item.Tag.ToString()));
 			}else if (e.Button == MouseButtons.Right){
 				contextMenuStrip1.Show( MousePosition); 
 			}
@@ -190,7 +191,8 @@ namespace Game_Launscher
 					gameIsRun = false;
 					if(datas.Count > activeGame){
 						if(datas[activeGame] != null){
-							datas[activeGame].Replace("=" + datas[activeGame].Split('=')[1], "=" + HowLongPlay(datas[activeGame].Split('=')[1]));
+							var t = datas[activeGame].Split('=')[1];
+							datas[activeGame].Replace("=" + t, "=" + HowLongPlay(t));
 						}else{
 							datas[activeGame] = processName.Replace(".exe", string.Empty) + "=" + HowLongPlay("00;00;00");
 						}
@@ -267,9 +269,9 @@ namespace Game_Launscher
 			return (h + ";" + m + ";" + s);
 		}
 		
-		public void ButtonSet(string path, int ID){
+		public void ButtonSet(System.Diagnostics.Process processe, int ID){
 			gameIsRun = true;
-			process = System.Diagnostics.Process.Start(path);
+			process = processe;
 			processName = process.ProcessName;
 			activeGame = ID;
 			saveTime = new List<string>();
