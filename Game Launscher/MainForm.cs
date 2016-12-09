@@ -28,6 +28,7 @@ namespace Game_Launscher
 		public int activeGame = -1;
 		public string processName;
 		public System.Diagnostics.Process process;
+		public string listing = "";
 		
 		public MainForm()
 		{
@@ -96,11 +97,6 @@ namespace Game_Launscher
 			}
 		}
 		
-		void ListView1SelectedIndexChanged(object sender, EventArgs e)
-		{
-	
-		}
-		
 		Control GetControlUnderMouse() {
     		foreach ( Control c in this.flowLayoutPanel1.Controls ) {
         		if ( c.Bounds.Contains(flowLayoutPanel1.PointToClient(MousePosition)) ) {
@@ -129,6 +125,7 @@ namespace Game_Launscher
 		}
 		void Button4Click(object sender, EventArgs e)
 		{
+			LauncherContent();
 			Close();
 		}
 		void Button3Click(object sender, EventArgs e)
@@ -161,7 +158,34 @@ namespace Game_Launscher
 	
 				
     		}	
+		}
+		void LauncherContent(){
+			foreach(Control a in flowLayoutPanel1.Controls){
+				var set = int.Parse(a.Tag.ToString());
+				if(datas.Count > set){
+					if(datas[set] != null){
+						if(datas[set].Split('|').Length == 2){
+							datas[set] += "|" + a.Name;
+						}else if(datas[set].Split('|').Length == 1){
+							datas[set] +="00;00;00" + "|" + a.Name;
+						}else{
+							datas[set] = Path.GetFileName(a.Name).Replace(".exe", string.Empty) + "|" + "00;00;00" + "|" + a.Name;
+						}
+					}else{
+						datas[set] = Path.GetFileName(a.Name).Replace(".exe", string.Empty) + "|" + "00;00;00" + "|" + a.Name;
+					}
+				}else{
+					for(int i = 0; i <= set; i++){
+						if(i == set){
+							datas.Add(Path.GetFileName(a.Name).Replace(".exe", string.Empty) + "|" + "00;00;00" + "|" + a.Name);
+						}else{
+							datas.Add("");
+						}
+					}
+				}
 			}
+			SaveData();
+		}
 		
 		void ToolStripMenuItem1Click(object sender, EventArgs e)
 		{
@@ -170,7 +194,7 @@ namespace Game_Launscher
 		
 		void Button5MouseDown(object sender, EventArgs e)
 		{
-			resize.Start();
+			//resize.Start();
 		}
 		
 		void Button5MouseUp(object sender, EventArgs e)
@@ -191,15 +215,15 @@ namespace Game_Launscher
 					gameIsRun = false;
 					if(datas.Count > activeGame){
 						if(datas[activeGame] != null){
-							var t = datas[activeGame].Split('=')[1];
-							datas[activeGame].Replace("=" + t, "=" + HowLongPlay(t));
+							var t = datas[activeGame].Split('|')[1];
+							datas[activeGame].Replace("|" + t, "|" + HowLongPlay(t));
 						}else{
-							datas[activeGame] = processName.Replace(".exe", string.Empty) + "=" + HowLongPlay("00;00;00");
+							datas[activeGame] = processName.Replace(".exe", string.Empty) + "|" + HowLongPlay("00;00;00");
 						}
 					}else{
 						for(int i = 0; i <= activeGame; i++){
 							if(i == activeGame){
-								datas.Add(processName.Replace(".exe", string.Empty) + "=" + HowLongPlay("00;00;00"));
+								datas.Add(processName.Replace(".exe", string.Empty) + "|" + HowLongPlay("00;00;00"));
 							}else{
 								datas.Add("");
 							}
@@ -215,13 +239,13 @@ namespace Game_Launscher
 			if(System.IO.File.Exists("./Data.glconfig")){
 				sw = new System.IO.StreamWriter("./Data.glconfig", false);
 				for(int i = 0; i < datas.Count; i++){
-					sw.WriteLine(datas[i]);
+					sw.Write(datas[i] + Environment.NewLine);
 				}
 				sw.Close();
 			}else{
 				sw = System.IO.File.CreateText("./Data.glconfig");
 				for(int i = 0; i < datas.Count; i++){
-					sw.WriteLine(datas[i]);
+					sw.Write(datas[i] + Environment.NewLine);
 				}
 				sw.Close();
 			}

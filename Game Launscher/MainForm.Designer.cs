@@ -201,9 +201,9 @@ namespace Game_Launscher
 			// contextMenuStrip1
 			// 
 			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.toolStripMenuItem1,
-			this.toolStripMenuItem6,
-			this.toolStripMenuItem7});
+									this.toolStripMenuItem1,
+									this.toolStripMenuItem6,
+									this.toolStripMenuItem7});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
 			this.contextMenuStrip1.Size = new System.Drawing.Size(181, 70);
 			// 
@@ -229,7 +229,7 @@ namespace Game_Launscher
 			// flowLayoutPanel1
 			// 
 			this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
+									| System.Windows.Forms.AnchorStyles.Right)));
 			this.flowLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
 			this.flowLayoutPanel1.ForeColor = System.Drawing.SystemColors.Control;
 			this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 48);
@@ -255,7 +255,7 @@ namespace Game_Launscher
 			this.menuStrip1.BackColor = System.Drawing.Color.Transparent;
 			this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(0);
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.menuToolStripMenuItem});
+									this.menuToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
@@ -268,10 +268,10 @@ namespace Game_Launscher
 			this.menuToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
 			this.menuToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.menuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.toolStripMenuItem2,
-			this.toolStripMenuItem3,
-			this.toolStripMenuItem4,
-			this.toolStripMenuItem5});
+									this.toolStripMenuItem2,
+									this.toolStripMenuItem3,
+									this.toolStripMenuItem4,
+									this.toolStripMenuItem5});
 			this.menuToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
 			this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
 			this.menuToolStripMenuItem.Size = new System.Drawing.Size(50, 40);
@@ -340,13 +340,12 @@ namespace Game_Launscher
 			// 
 			// resize
 			// 
-			this.resize.Interval = 1;
+			this.resize.Interval = 500;
 			this.resize.Tick += new System.EventHandler(this.ResizeTick);
 			// 
 			// MainForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.BackColor = System.Drawing.SystemColors.GrayText;
 			this.BackgroundImage = global::Game_Launscher.Resource1.Background_01;
@@ -369,8 +368,6 @@ namespace Game_Launscher
 			this.menuStrip1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
-			this.Activated += MainForm_Active;
-
 		}
 	}
 }
