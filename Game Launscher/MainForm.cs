@@ -67,19 +67,19 @@ namespace Game_Launscher
 		}
 		void OpenFileDialog1FileOk(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			
-
-					
+			foreach(string a in openFileDialog1.FileNames)
+			{
+				additem(a);
+			}		
 		}
 		
-		void additem (string[] files){
-			foreach(string a in files)
-			{
-				foreach ( Control c1 in flowLayoutPanel1.Controls ) {
-					if (c1.Name.Contains(a)){
-						goto pidano;
-					}
+		void additem (string a){
+			
+			foreach ( Control c1 in flowLayoutPanel1.Controls ) {
+				if (c1.Name.Contains(a)){
+					goto pidano;
 				}
+			}
 				
 			if (a.Contains(".exe")){
 			
@@ -100,11 +100,11 @@ namespace Game_Launscher
 					goto mustek;
 					pidano: MessageBox.Show("Položka: <b>" + Path.GetFileName(a).Replace(".exe", string.Empty) + "<b> je již přidána!");
 					mustek:;
-			}
+			
 		}
 		
 		Control GetControlUnderMouse() {
-    		foreach ( Control c in this.flowLayoutPanel1.Controls ) {
+    		foreach ( Control c in flowLayoutPanel1.Controls ) {
         		if ( c.Bounds.Contains(flowLayoutPanel1.PointToClient(MousePosition)) ) {
 					return c;
 					
@@ -136,24 +136,24 @@ namespace Game_Launscher
 		}
 		void Button3Click(object sender, EventArgs e)
 		{
-			if (this.WindowState == FormWindowState.Normal){
-				this.WindowState = FormWindowState.Maximized;
+			if (WindowState == FormWindowState.Normal){
+				WindowState = FormWindowState.Maximized;
 				button3.BackgroundImage = Resource1.UI_4;
-			}else if (this.WindowState == FormWindowState.Maximized) {
-				this.WindowState = FormWindowState.Normal;
+			}else if (WindowState == FormWindowState.Maximized) {
+				WindowState = FormWindowState.Normal;
 				button3.BackgroundImage = Resource1.UI_5;
 			}
 		}
 		void Button2Click(object sender, EventArgs e)
 		{
-			this.WindowState = FormWindowState.Minimized;
+			WindowState = FormWindowState.Minimized;
 		}
 		void MenuToolStripMenuItemClick(object sender, EventArgs e)
 		{
 		}
 		void OpenFileDialog2FileOk(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			string localfilenames = openFileDialog2.FileName.ToString();
+			string localfilenames = openFileDialog2.FileName;
 			if(File.Exists(localfilenames)){
 				Directory.CreateDirectory("./coverlib");
 				MessageBox.Show(current_item_name + current_item.ToString());
