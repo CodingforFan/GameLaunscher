@@ -69,7 +69,7 @@ namespace Game_Launscher
 				}
 				sr.Close();
 			}else{
-				if(Directory.Exists("./config")){
+				if(!Directory.Exists("./config")){
 					Directory.CreateDirectory("./config");
 				}
 				File.CreateText("./config/datalib.glconfig").Close();
