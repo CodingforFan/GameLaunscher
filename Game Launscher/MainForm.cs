@@ -44,25 +44,27 @@ namespace Game_Launscher
 			Support.Log("Start");
 			datas = new List<string>();
 			if(File.Exists("./config/datalib.glconfig")){
+				int countLines = File.ReadAllLines("./config/datalib.glconfig").Length;
 				sr = new StreamReader("./config/datalib.glconfig");
-				MessageBox.Show(File.ReadAllLines("./config/datalib.glconfig").Length.ToString());
 				if(sr.ReadToEnd().Length > 0){
-					string h = "";
-					for(int i = 0; (h = sr.ReadLine()) != null; i++){
-						datas.Add(h);
+					sr.Close();
+					sr = new StreamReader("./config/datalib.glconfig");
+					for(int i = 0; i < countLines; i++){
+						datas.Add(sr.ReadLine());
 					}
 					for(int g = 0; g < datas.Count; g++){
 						string a = "";
 						int num = 0;
 						if(datas[g] != null){
 							foreach(string d in datas[g].Split('|')){
-								if(num == 3){
+								if(num == 2){
 									a = d;
 								}
 								num ++;
 							}
 						}
-						if(a != null){
+						if(a != ""){
+							
 							additem(a);
 						}
 					}
@@ -105,7 +107,6 @@ namespace Game_Launscher
 				PictureBox pb = new PictureBox {Name = a,Size = new Size(300,150),BackgroundImageLayout = ImageLayout.Zoom, BackgroundImage = Icon.ExtractAssociatedIcon(a).ToBitmap()};
 				pb.Tag = flowLayoutPanel1.Controls.Count.ToString();
 				pb.MouseClick += Item_Click;
-					
 				Label lb = new Label {Name = a + "1", Text = Path.GetFileName(a).Replace(".exe", string.Empty)};
 				lb.MouseClick += Item_Click;
 				lb.Font = new Font(lb.Font.Name, 24,FontStyle.Bold);
@@ -186,25 +187,27 @@ namespace Game_Launscher
 		}
 		void LauncherContent(){
 			foreach(Control a in flowLayoutPanel1.Controls){
-				var set = int.Parse(a.Tag.ToString());
-				if(datas.Count > set){
-					if(datas[set] != null){
-						if(datas[set].Split('|').Length == 2){
-							datas[set] += "|" + a.Name;
-						}else if(datas[set].Split('|').Length == 1){
-							datas[set] +="00;00;00" + "|" + a.Name;
-						}else{
-							datas[set] = Path.GetFileName(a.Name).Replace(".exe", string.Empty) + "|" + "00;00;00" + "|" + a.Name;
+				int sets = int.Parse(a.Tag.ToString());
+				if(datas.Count > sets){
+					if(datas[sets] != null){
+						int num = 0;
+						foreach(string s in datas[sets].Split('|')){num++;}
+						if(num == 3){
+							datas[sets] += "|" + a.Name;
+						}else if(num == 2){
+							datas[sets] +="00;00;00" + "|" + a.Name;
+						}else if(num <= 1){
+							datas[sets] = Path.GetFileName(a.Name).Replace(".exe", string.Empty) + "|" + "00;00;00" + "|" + a.Name;
 						}
 					}else{
-						datas[set] = Path.GetFileName(a.Name).Replace(".exe", string.Empty) + "|" + "00;00;00" + "|" + a.Name;
+						datas[sets] = Path.GetFileName(a.Name).Replace(".exe", string.Empty) + "|" + "00;00;00" + "|" + a.Name;
 					}
 				}else{
-					for(int i = 0; i <= set; i++){
-						if(i == set){
+					for(int i = 0; i <= sets; i++){
+						if(i == sets){
 							datas.Add(Path.GetFileName(a.Name).Replace(".exe", string.Empty) + "|" + "00;00;00" + "|" + a.Name);
 						}else{
-							datas.Add("");
+							datas.Add(null);
 						}
 					}
 				}
@@ -240,8 +243,13 @@ namespace Game_Launscher
 					gameIsRun = false;
 					if(datas.Count > activeGame){
 						if(datas[activeGame] != null){
-							var t = datas[activeGame].Split('|')[1];
-							datas[activeGame].Replace("|" + t, "|" + HowLongPlay(t));
+							int num = 0;
+							foreach(string t in datas[activeGame].Split('|')){
+								if(num == 2){
+									datas[activeGame].Replace(t, HowLongPlay(t));
+								}
+								num++;
+							}
 						}else{
 							datas[activeGame] = processName.Replace(".exe", string.Empty) + "|" + HowLongPlay("00;00;00");
 						}
@@ -250,7 +258,7 @@ namespace Game_Launscher
 							if(i == activeGame){
 								datas.Add(processName.Replace(".exe", string.Empty) + "|" + HowLongPlay("00;00;00"));
 							}else{
-								datas.Add("");
+								datas.Add(null);
 							}
 						}
 					}
@@ -264,13 +272,17 @@ namespace Game_Launscher
 			if(System.IO.File.Exists("./config/datalib.glconfig")){
 				sw = new System.IO.StreamWriter("./config/datalib.glconfig", false);
 				for(int i = 0; i < datas.Count; i++){
-					sw.Write(datas[i] + Environment.NewLine);
+					if(datas[i] != null){
+						sw.Write(datas[i] + Environment.NewLine);
+					}
 				}
 				sw.Close();
 			}else{
 				sw = System.IO.File.CreateText("./config/datalib.glconfig");
 				for(int i = 0; i < datas.Count; i++){
-					sw.Write(datas[i] + Environment.NewLine);
+					if(datas[i] != null){
+						sw.Write(datas[i] + Environment.NewLine);
+					}
 				}
 				sw.Close();
 			}
