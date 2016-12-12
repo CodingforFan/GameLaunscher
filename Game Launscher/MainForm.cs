@@ -39,11 +39,13 @@ namespace Game_Launscher
 		
 		void MainFormLoad(object sender, EventArgs e)
 		{
+		 	button5.MouseDown += Button5MouseDown;
+		 	button5.MouseUp += Button5MouseUp;
 			Support.Log("Start");
-			if(System.IO.File.Exists("./config/datalib.glconfig")){
-				sr = new System.IO.StreamReader("./config/datalib.glconfig");
+			if(File.Exists("./config/datalib.glconfig")){
+				sr = new StreamReader("./config/datalib.glconfig");
 				if(sr.ReadToEnd().Length > 0){
-					var poc = System.IO.File.ReadAllLines("./config/datalib.glconfig").Length;
+					var poc = File.ReadAllLines("./config/datalib.glconfig").Length;
 					for(int i = 0; i < poc; i++){
 						if(datas.Count > i){
 							datas[i] = sr.ReadLine();
@@ -57,8 +59,9 @@ namespace Game_Launscher
 				}
 				sr.Close();
 			}else{
-				System.IO.File.CreateText("./config/datalib.glconfig").Close();
+				File.CreateText("./config/datalib.glconfig").Close();
 			}
+		}
 		}
 		
 		void Button1Click(object sender, EventArgs e)
@@ -312,6 +315,10 @@ namespace Game_Launscher
 			saveTime.Add(sets.Split(';')[0]);
 			saveTime.Add(sets.Split(';')[1]);
 			saveTime.Add(sets.Split(';')[2]);
+		}
+		void FlowLayoutPanel1Paint(object sender, PaintEventArgs e)
+		{
+	
 		}
 	}
 }
