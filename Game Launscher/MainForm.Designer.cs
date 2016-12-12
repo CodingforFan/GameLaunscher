@@ -335,9 +335,8 @@ namespace Game_Launscher
 			this.button5.Size = new System.Drawing.Size(20, 20);
 			this.button5.TabIndex = 13;
 			this.button5.UseVisualStyleBackColor = false;
-			this.button5.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button5MouseDown);
-			this.button5.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button5MouseUp);
-			// 
+			this.button5.MouseDown += (Button5MouseDown);
+			this.button5.MouseUp += (Button5MouseUp);
 			// resize
 			// 
 			this.resize.Interval = 500;
