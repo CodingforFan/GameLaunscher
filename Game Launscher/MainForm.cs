@@ -42,6 +42,7 @@ namespace Game_Launscher
 		 	button5.MouseDown += Button5MouseDown;
 		 	button5.MouseUp += Button5MouseUp;
 			Support.Log("Start");
+<<<<<<< HEAD
 			if(File.Exists("./config/datalib.glconfig")){
 				sr = new StreamReader("./config/datalib.glconfig");
 				if(sr.ReadToEnd().Length > 0){
@@ -52,10 +53,31 @@ namespace Game_Launscher
 						}else{
 							datas.Add(sr.ReadLine());
 						}
+=======
+			datas = new List<string>();
+			if(System.IO.File.Exists("./config/datalib.glconfig")){
+				sr = new System.IO.StreamReader("./config/datalib.glconfig");
+				if(sr.ReadToEnd().Length > 0){
+					string h = "";
+					for(int i = 0; (h = sr.ReadLine()) != null; i++){
+						datas.Add(h);
+>>>>>>> origin/master
 					}
 					for(int g = 0; g < datas.Count; g++){
-					var a = datas[g].Split('|')[2];
-					
+						string a = "";
+						int num = 0;
+						if(datas[g] != null){
+							foreach(string d in datas[g].Split('|')){
+								if(num == 3){
+									a = d;
+								}
+								num ++;
+							}
+						}
+						if(a != null){
+							additem(a);
+						}
+					}
 				}
 				sr.Close();
 			}else{
@@ -103,9 +125,9 @@ namespace Game_Launscher
 				flowLayoutPanel1.Controls.Add(pb);
 					
 			}
-					goto mustek;
-					pidano: MessageBox.Show("Položka: <b>" + Path.GetFileName(a).Replace(".exe", string.Empty) + "<b> je již přidána!");
-					mustek:;
+			goto mustek;
+			pidano: MessageBox.Show("Položka: <b>" + Path.GetFileName(a).Replace(".exe", string.Empty) + "<b> je již přidána!");
+			mustek:;
 			
 		}
 		
