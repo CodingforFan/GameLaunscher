@@ -40,10 +40,10 @@ namespace Game_Launscher
 		void MainFormLoad(object sender, EventArgs e)
 		{
 			Support.Log("Start");
-			if(System.IO.File.Exists("./Data.glconfig")){
-				sr = new System.IO.StreamReader("./Data.glconfig");
+			if(System.IO.File.Exists("./config/datalib.glconfig")){
+				sr = new System.IO.StreamReader("./config/datalib.glconfig");
 				if(sr.ReadToEnd().Length > 0){
-					var poc = System.IO.File.ReadAllLines("./Data.glconfig").Length;
+					var poc = System.IO.File.ReadAllLines("./config/datalib.glconfig").Length;
 					for(int i = 0; i < poc; i++){
 						if(datas.Count > i){
 							datas[i] = sr.ReadLine();
@@ -51,10 +51,13 @@ namespace Game_Launscher
 							datas.Add(sr.ReadLine());
 						}
 					}
+					for(int g = 0; g < datas.Count; g++){
+					var a = datas[g].Split('|')[2];
+					
 				}
 				sr.Close();
 			}else{
-				System.IO.File.CreateText("./Data.glconfig").Close();
+				System.IO.File.CreateText("./config/datalib.glconfig").Close();
 			}
 		}
 		
@@ -242,14 +245,14 @@ namespace Game_Launscher
 		}
 		
 		public void SaveData(){
-			if(System.IO.File.Exists("./Data.glconfig")){
-				sw = new System.IO.StreamWriter("./Data.glconfig", false);
+			if(System.IO.File.Exists("./config/datalib.glconfig")){
+				sw = new System.IO.StreamWriter("./config/datalib.glconfig", false);
 				for(int i = 0; i < datas.Count; i++){
 					sw.Write(datas[i] + Environment.NewLine);
 				}
 				sw.Close();
 			}else{
-				sw = System.IO.File.CreateText("./Data.glconfig");
+				sw = System.IO.File.CreateText("./config/datalib.glconfig");
 				for(int i = 0; i < datas.Count; i++){
 					sw.Write(datas[i] + Environment.NewLine);
 				}
