@@ -43,6 +43,7 @@ namespace Game_Launscher
 			datas = new List<string>();
 			if(System.IO.File.Exists("./config/datalib.glconfig")){
 				sr = new System.IO.StreamReader("./config/datalib.glconfig");
+				MessageBox.Show(File.ReadAllLines("./config/datalib.glconfig").Length.ToString());
 				if(sr.ReadToEnd().Length > 0){
 					string h = "";
 					for(int i = 0; (h = sr.ReadLine()) != null; i++){
@@ -67,6 +68,7 @@ namespace Game_Launscher
 				sr.Close();
 			}else{
 				System.IO.File.CreateText("./config/datalib.glconfig").Close();
+				datas = new List<string>();
 			}
 		}
 		
