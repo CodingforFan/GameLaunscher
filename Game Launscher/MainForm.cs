@@ -43,8 +43,8 @@ namespace Game_Launscher
 		 	button5.MouseUp += Button5MouseUp;
 			Support.Log("Start");
 			datas = new List<string>();
-			if(System.IO.File.Exists("./config/datalib.glconfig")){
-				sr = new System.IO.StreamReader("./config/datalib.glconfig");
+			if(File.Exists("./config/datalib.glconfig")){
+				sr = new StreamReader("./config/datalib.glconfig");
 				MessageBox.Show(File.ReadAllLines("./config/datalib.glconfig").Length.ToString());
 				if(sr.ReadToEnd().Length > 0){
 					string h = "";
@@ -69,10 +69,12 @@ namespace Game_Launscher
 				}
 				sr.Close();
 			}else{
-				System.IO.File.CreateText("./config/datalib.glconfig").Close();
+				if(Directory.Exists("./config")){
+					Directory.CreateDirectory("./config");
+				}
+				File.CreateText("./config/datalib.glconfig").Close();
 				datas = new List<string>();
 			}
-		}
 		}
 		
 		void Button1Click(object sender, EventArgs e)
