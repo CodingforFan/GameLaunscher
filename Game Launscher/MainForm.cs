@@ -42,18 +42,6 @@ namespace Game_Launscher
 		 	button5.MouseDown += Button5MouseDown;
 		 	button5.MouseUp += Button5MouseUp;
 			Support.Log("Start");
-<<<<<<< HEAD
-			if(File.Exists("./config/datalib.glconfig")){
-				sr = new StreamReader("./config/datalib.glconfig");
-				if(sr.ReadToEnd().Length > 0){
-					var poc = File.ReadAllLines("./config/datalib.glconfig").Length;
-					for(int i = 0; i < poc; i++){
-						if(datas.Count > i){
-							datas[i] = sr.ReadLine();
-						}else{
-							datas.Add(sr.ReadLine());
-						}
-=======
 			datas = new List<string>();
 			if(System.IO.File.Exists("./config/datalib.glconfig")){
 				sr = new System.IO.StreamReader("./config/datalib.glconfig");
@@ -62,7 +50,6 @@ namespace Game_Launscher
 					string h = "";
 					for(int i = 0; (h = sr.ReadLine()) != null; i++){
 						datas.Add(h);
->>>>>>> origin/master
 					}
 					for(int g = 0; g < datas.Count; g++){
 						string a = "";
@@ -82,12 +69,8 @@ namespace Game_Launscher
 				}
 				sr.Close();
 			}else{
-<<<<<<< HEAD
 				System.IO.File.CreateText("./config/datalib.glconfig").Close();
 				datas = new List<string>();
-=======
-				File.CreateText("./config/datalib.glconfig").Close();
->>>>>>> origin/master
 			}
 		}
 		}
