@@ -29,6 +29,7 @@ namespace Game_Launscher
 		public string processName;
 		public System.Diagnostics.Process process;
 		public string listing = "";
+
 		
 		public MainForm()
 		{
@@ -141,7 +142,9 @@ namespace Game_Launscher
 			if (e.Button == MouseButtons.Left){
 				ButtonSet(System.Diagnostics.Process.Start(current_item.Name), int.Parse(current_item.Tag.ToString()));
 			}else if (e.Button == MouseButtons.Right){
-				contextMenuStrip1.Show( MousePosition); 
+				//contextMenuStrip1.Show( MousePosition); 
+				//MessageBox.Show(GetControlUnderMouse().Name);
+				new Karta_Hry(current_item_name).Show();
 			}
 		}
 		void UpdateTick(object sender, EventArgs e)
