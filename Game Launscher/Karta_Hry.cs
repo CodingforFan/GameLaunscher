@@ -35,12 +35,14 @@ namespace Game_Launscher
 
 		void Karta_HryLoad(object sender, EventArgs e)
 		{
-			wb1.Url = new Uri("https://www.igdb.com/games/the-witcher-3-wild-hunt-game-of-the-year-edition");
-			string gg = wb1.Document.Body.
-			MessageBox.Show(gg);
+			try{
+				wb1.Url = new Uri("https://www.igdb.com/games/the-witcher-3-wild-hunt-game-of-the-year-edition");
+				string gg = wb1.Document.Body.ToString();
+				MessageBox.Show(gg);
+			}catch{
+			}
 			label1.Text = G_Name;
 			
-		
 			pictureBox1.Load("https://images.igdb.com/igdb/image/upload/t_cover_big/jusjbgw2hb80sgyltvlw.jpg");
 	
 		}
