@@ -47,7 +47,7 @@ namespace Game_Launscher
 			// 
 			// label1
 			// 
-			this.label1.Location = new System.Drawing.Point(13, 13);
+			this.label1.Location = new System.Drawing.Point(13, 272);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(100, 23);
 			this.label1.TabIndex = 0;
@@ -55,7 +55,7 @@ namespace Game_Launscher
 			// 
 			// label2
 			// 
-			this.label2.Location = new System.Drawing.Point(13, 114);
+			this.label2.Location = new System.Drawing.Point(12, 295);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(100, 39);
 			this.label2.TabIndex = 1;
@@ -63,9 +63,9 @@ namespace Game_Launscher
 			// 
 			// pictureBox1
 			// 
-			this.pictureBox1.Location = new System.Drawing.Point(13, 40);
+			this.pictureBox1.Location = new System.Drawing.Point(13, 12);
 			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(100, 71);
+			this.pictureBox1.Size = new System.Drawing.Size(259, 257);
 			this.pictureBox1.TabIndex = 2;
 			this.pictureBox1.TabStop = false;
 			// 
@@ -73,10 +73,10 @@ namespace Game_Launscher
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(284, 261);
-			this.Controls.Add(this.pictureBox1);
+			this.ClientSize = new System.Drawing.Size(284, 422);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
+			this.Controls.Add(this.pictureBox1);
 			this.Name = "Karta_Hry";
 			this.Text = "Karta_Hry";
 			this.Load += new System.EventHandler(this.Karta_HryLoad);
