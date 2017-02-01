@@ -36,7 +36,6 @@ namespace Game_Launscher
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.Button button5;
 		private System.Windows.Forms.Timer resize;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem8;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -82,7 +81,6 @@ namespace Game_Launscher
 			this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
 			this.button5 = new System.Windows.Forms.Button();
 			this.resize = new System.Windows.Forms.Timer(this.components);
-			this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -193,6 +191,7 @@ namespace Game_Launscher
 			this.label2.TabIndex = 3;
 			this.label2.Text = "label2";
 			this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label2.Click += new System.EventHandler(this.Label2Click);
 			// 
 			// openFileDialog2
 			// 
@@ -260,8 +259,7 @@ namespace Game_Launscher
 			this.menuStrip1.BackgroundImage = global::Game_Launscher.Resource1.UI_1;
 			this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(0);
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.menuToolStripMenuItem,
-			this.toolStripMenuItem8});
+			this.menuToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
@@ -345,11 +343,6 @@ namespace Game_Launscher
 			// resize
 			// 
 			this.resize.Tick += new System.EventHandler(this.ResizeTick);
-			// 
-			// toolStripMenuItem8
-			// 
-			this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-			this.toolStripMenuItem8.Size = new System.Drawing.Size(94, 40);
 			// 
 			// MainForm
 			// 
