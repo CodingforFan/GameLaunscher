@@ -46,8 +46,8 @@ namespace Game_Launscher
 //			
 //			pictureBox1.Load("https://images.igdb.com/igdb/image/upload/t_cover_big/jusjbgw2hb80sgyltvlw.jpg");
 			using(System.Net.WebClient client = new System.Net.WebClient()){
-				string htmlcode = client.DownloadString("https://www.igdb.com/games/" + G_Name.Replace(" ","-"));
-				MessageBox.Show("https://www.igdb.com/games/" + G_Name.Replace(" ","-"));
+				string htmlcode = client.DownloadString("https://www.igdb.com/search?utf8=✓&type=1&q=" + G_Name.Replace(".exe",string.Empty).Replace(" ","%"));
+				MessageBox.Show("https://www.igdb.com/search?utf8=✓&type=1&q=" + G_Name.Replace(".exe",string.Empty).Replace(" ","%"));
 				textBox1.Text = htmlcode;
 			}
 	
