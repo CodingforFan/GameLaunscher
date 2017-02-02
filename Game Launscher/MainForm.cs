@@ -349,5 +349,13 @@ namespace Game_Launscher
 		{
 	
 		}
+		void MiniToolStripItemClicked(object sender, ToolStripItemClickedEventArgs e)
+		{
+	
+		}
+		void ToolStripMenuItem6Click(object sender, EventArgs e)
+		{
+			new Karta_Hry(current_item_name).Show();
+		}
 	}
 }

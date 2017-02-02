@@ -49,15 +49,15 @@ namespace Game_Launscher
 			// 
 			this.label1.Location = new System.Drawing.Point(13, 272);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(100, 23);
+			this.label1.Size = new System.Drawing.Size(259, 23);
 			this.label1.TabIndex = 0;
 			this.label1.Text = "label1";
 			// 
 			// label2
 			// 
-			this.label2.Location = new System.Drawing.Point(12, 295);
+			this.label2.Location = new System.Drawing.Point(13, 295);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(100, 39);
+			this.label2.Size = new System.Drawing.Size(259, 118);
 			this.label2.TabIndex = 1;
 			this.label2.Text = "label2";
 			// 

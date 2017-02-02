@@ -31,7 +31,7 @@ namespace Game_Launscher
 		private System.Windows.Forms.OpenFileDialog openFileDialog2;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
+		private System.Windows.Forms.ToolStripMenuItem Kartahry;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem7;
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.Button button5;
@@ -69,7 +69,7 @@ namespace Game_Launscher
 			this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
+			this.Kartahry = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.miniToolStrip = new System.Windows.Forms.MenuStrip();
@@ -203,7 +203,7 @@ namespace Game_Launscher
 			// 
 			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.toolStripMenuItem1,
-			this.toolStripMenuItem6,
+			this.Kartahry,
 			this.toolStripMenuItem7});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
 			this.contextMenuStrip1.Size = new System.Drawing.Size(181, 70);
@@ -215,11 +215,12 @@ namespace Game_Launscher
 			this.toolStripMenuItem1.Text = "Změnit obrázem";
 			this.toolStripMenuItem1.Click += new System.EventHandler(this.ToolStripMenuItem1Click);
 			// 
-			// toolStripMenuItem6
+			// Kartahry
 			// 
-			this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-			this.toolStripMenuItem6.Size = new System.Drawing.Size(180, 22);
-			this.toolStripMenuItem6.Text = "toolStripMenuItem6";
+			this.Kartahry.Name = "Kartahry";
+			this.Kartahry.Size = new System.Drawing.Size(180, 22);
+			this.Kartahry.Text = "toolStripMenuItem6";
+			this.Kartahry.Click += new System.EventHandler(this.ToolStripMenuItem6Click);
 			// 
 			// toolStripMenuItem7
 			// 
@@ -251,6 +252,7 @@ namespace Game_Launscher
 			this.miniToolStrip.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
 			this.miniToolStrip.Size = new System.Drawing.Size(58, 40);
 			this.miniToolStrip.TabIndex = 5;
+			this.miniToolStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.MiniToolStripItemClicked);
 			// 
 			// menuStrip1
 			// 
