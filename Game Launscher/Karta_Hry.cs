@@ -35,16 +35,27 @@ namespace Game_Launscher
 
 		void Karta_HryLoad(object sender, EventArgs e)
 		{
-			try{
-				wb1.Url = new Uri("https://www.igdb.com/games/" + G_Name.Replace(" ","-"));
-				string gg = wb1.Document.Body.ToString();
+//			try{
+//				wb1.Url = new Uri("https://www.igdb.com/games/" + G_Name.Replace(" ","-"));
+//				string gg = wb1.Document.Body.ToString();
+//				MessageBox.Show("https://www.igdb.com/games/" + G_Name.Replace(" ","-"));
+//				MessageBox.Show(gg);
+//			}catch{
+//			}
+//			label1.Text = G_Name;
+//			
+//			pictureBox1.Load("https://images.igdb.com/igdb/image/upload/t_cover_big/jusjbgw2hb80sgyltvlw.jpg");
+			using(System.Net.WebClient client = new System.Net.WebClient()){
+				string htmlcode = client.DownloadString("https://www.igdb.com/games/" + G_Name.Replace(" ","-"));
 				MessageBox.Show("https://www.igdb.com/games/" + G_Name.Replace(" ","-"));
-			}catch{
+				textBox1.Text = htmlcode;
 			}
-			label1.Text = G_Name;
-			
-			pictureBox1.Load("https://images.igdb.com/igdb/image/upload/t_cover_big/jusjbgw2hb80sgyltvlw.jpg");
 	
+		}
+		
+		void TextBox1TextChanged(object sender, EventArgs e)
+		{
+			
 		}
 	}
 }
