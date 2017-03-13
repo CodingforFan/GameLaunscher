@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game Launscher", "Game Laun
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupportLibrary", "SupportLibrary\SupportLibrary.csproj", "{F8EE2E63-5BD4-47BF-A4B8-3193B64CEFEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameBox v2.0", "GameBox v2.0\GameBox v2.0.csproj", "{139540A7-BDB6-44B9-A520-63A0395C26EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameBox_v2", "GameBox v2.0\GameBox_v2.csproj", "{139540A7-BDB6-44B9-A520-63A0395C26EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
