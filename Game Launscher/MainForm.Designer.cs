@@ -268,6 +268,7 @@ namespace Game_Launscher
 			this.menuStrip1.Size = new System.Drawing.Size(700, 40);
 			this.menuStrip1.TabIndex = 12;
 			this.menuStrip1.Text = "menuStrip1";
+			this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.MenuStrip1ItemClicked);
 			// 
 			// menuToolStripMenuItem
 			// 

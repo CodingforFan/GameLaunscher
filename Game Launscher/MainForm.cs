@@ -357,5 +357,9 @@ namespace Game_Launscher
 		{
 			new Karta_Hry(current_item_name).Show();
 		}
+		void MenuStrip1ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+		{
+	
+		}
 	}
 }
