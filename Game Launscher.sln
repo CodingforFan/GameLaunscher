@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game Launscher", "Game Laun
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupportLibrary", "SupportLibrary\SupportLibrary.csproj", "{F8EE2E63-5BD4-47BF-A4B8-3193B64CEFEE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameBox v2.0", "GameBox v2.0\GameBox v2.0.csproj", "{139540A7-BDB6-44B9-A520-63A0395C26EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,5 +22,9 @@ Global
 		{F8EE2E63-5BD4-47BF-A4B8-3193B64CEFEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8EE2E63-5BD4-47BF-A4B8-3193B64CEFEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8EE2E63-5BD4-47BF-A4B8-3193B64CEFEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{139540A7-BDB6-44B9-A520-63A0395C26EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{139540A7-BDB6-44B9-A520-63A0395C26EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{139540A7-BDB6-44B9-A520-63A0395C26EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{139540A7-BDB6-44B9-A520-63A0395C26EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

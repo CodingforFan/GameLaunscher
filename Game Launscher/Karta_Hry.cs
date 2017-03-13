@@ -36,21 +36,21 @@ namespace Game_Launscher
 		void Karta_HryLoad(object sender, EventArgs e)
 		{
 //			try{
-//				wb1.Url = new Uri("https://www.igdb.com/games/" + G_Name.Replace(" ","-"));
+//				wb1.Url = new Uri("https://www.databaze-her.cz/hry/" + G_Name.Replace(" ","-"));
 //				string gg = wb1.Document.Body.ToString();
-//				MessageBox.Show("https://www.igdb.com/games/" + G_Name.Replace(" ","-"));
+//				MessageBox.Show("https://www.databaze-her.cz/hry/" + G_Name.Replace(" ","-"));
 //				MessageBox.Show(gg);
 //			}catch{
 //			}
 //			
 //			
 //			pictureBox1.Load("https://images.igdb.com/igdb/image/upload/t_cover_big/jusjbgw2hb80sgyltvlw.jpg");
-			using(System.Net.WebClient client = new System.Net.WebClient()){
-				string htmlcode = client.DownloadString("https://www.igdb.com/search?utf8=✓&type=1&q=" + G_Name.Replace(".exe",string.Empty));
+			/*using(System.Net.WebClient client = new System.Net.WebClient()){
+				string htmlcode = client.DownloadString("https://www.databaze-her.cz/hry/" + (G_Name.Replace(".exe",string.Empty)).Replace(" ","-"));
 				MessageBox.Show("https://www.igdb.com/search?utf8=✓&type=1&q=" + G_Name.Replace(".exe",string.Empty));
 				textBox1.Text = htmlcode;
 				label1.Text = G_Name;
-			}
+			}*/
 	
 		}
 		
