@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
+using System.Diagnostics;
 
 
 namespace GameBox_v2
@@ -30,7 +31,7 @@ namespace GameBox_v2
 		public int activeGame = -1;
 		public string processName;
 		public System.Diagnostics.Process process;
-		public string listing = "";
+		public string listing = "";		
 		
 		public MainForm()
 		{
@@ -105,7 +106,14 @@ namespace GameBox_v2
 				PictureBox pb = new PictureBox {Name = a,Size = new Size(300,150),BackgroundImageLayout = ImageLayout.Zoom, BackgroundImage = Icon.ExtractAssociatedIcon(a).ToBitmap()};
 				pb.Tag = flowLayoutPanel1.Controls.Count.ToString();
 				pb.MouseClick += Item_Click;
-				Label lb = new Label {Name = a + "1", Text = Path.GetFileName(a).Replace(".exe", string.Empty)};
+				FileVersionInfo fi = FileVersionInfo.GetVersionInfo(a);
+				string name = fi.ProductName;
+				if(new NameField(name).ShowDialog() == DialogResult.OK){
+					name = NameField.name;
+					if(name == "")
+						name = Path.GetFileNameWithoutExtension(a);
+				}
+				Label lb = new Label {Name = a + "1", Text = name};
 				lb.MouseClick += Item_Click;
 				lb.Font = new Font(lb.Font.Name, 24,FontStyle.Bold);
 				lb.AutoSize = true;

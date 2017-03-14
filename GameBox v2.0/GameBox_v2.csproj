@@ -67,6 +67,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NameField.cs" />
+    <Compile Include="NameField.Designer.cs">
+      <DependentUpon>NameField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Karta_Hry.cs" />
     <Compile Include="Karta_Hry.Designer.cs">
       <DependentUpon>Karta_Hry.cs</DependentUpon>
@@ -82,6 +86,9 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NameField.resx">
+      <DependentUpon>NameField.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
