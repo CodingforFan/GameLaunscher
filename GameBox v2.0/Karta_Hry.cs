@@ -9,6 +9,8 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
+using System.Text;
 
 namespace GameBox_v2
 {
@@ -20,14 +22,15 @@ namespace GameBox_v2
 	{
 		WebBrowser wb1 = new WebBrowser();
 		static string G_Name = "";
+		string webText;
+		bool tryAgain = true;
 		public Karta_Hry(string gamename = "")
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
-			G_Name = gamename;
 			InitializeComponent();
-			
+			G_Name = gamename;
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
@@ -42,21 +45,40 @@ namespace GameBox_v2
 //				MessageBox.Show(gg);
 //			}catch{
 //			}
-			
-			
-			pictureBox1.Load("https://images.igdb.com/igdb/image/upload/t_cover_big/jusjbgw2hb80sgyltvlw.jpg");
-			using(System.Net.WebClient client = new System.Net.WebClient()){
-				string htmlcode = client.DownloadString("https://www.databaze-her.cz/hry/" + (G_Name.Replace(".exe",string.Empty)).Replace(" ","-"));
-				MessageBox.Show("https://www.igdb.com/search?utf8=✓&type=1&q=" + G_Name.Replace(".exe",string.Empty));
-				textBox1.Text = htmlcode;
-				label1.Text = G_Name;
+			while(tryAgain){
+				try{
+					using(System.Net.WebClient client = new System.Net.WebClient()){
+						client.Encoding = Encoding.UTF8;
+						client.Encoding = ASCIIEncoding.UTF8;
+						string htmlcode = client.DownloadString("https://www.databaze-her.cz/hry/" + G_Name.Replace(" ","-"));
+						webText = htmlcode;
+						label1.Text = G_Name;
+					}
+					if(webText != ""){
+						int posS = webText.IndexOf("<img src=\"/obrazky/hry_krabice/");
+						string myCapturedText = webText.Substring(posS, webText.IndexOf('>',posS) - posS + 1).Remove(0, 10);
+						int pos = myCapturedText.IndexOf("?_");
+						pictureBox1.Load("https://www.databaze-her.cz" + myCapturedText.Remove(pos, (myCapturedText.Length - pos)));
+					
+						posS = webText.IndexOf("<div id=\"game-description\"");
+						myCapturedText = webText.Substring(posS, webText.IndexOf("</div>",posS) - posS).Remove(0, 10);
+						pos = myCapturedText.IndexOf('>', 0);
+						label2.Text = myCapturedText.Remove(0, pos + 1);
+						for(;label2.Text.Contains("<") && label2.Text.Contains(">");){
+							int pos2 = label2.Text.IndexOf('<');
+							int pos3 = label2.Text.IndexOf('>')  + 1 - pos2;
+							label2.Text = label2.Text.Remove(pos2, pos3);
+						}	
+					}
+					tryAgain = false;
+				}catch{
+					if(new NameField(G_Name).ShowDialog() == DialogResult.OK){
+						G_Name = NameField.name;
+					}else{
+						tryAgain = false;
+					}
+				}
 			}
-	
-		}
-		
-		void TextBox1TextChanged(object sender, EventArgs e)
-		{
-			
 		}
 	}
 }

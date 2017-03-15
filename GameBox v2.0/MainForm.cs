@@ -108,12 +108,18 @@ namespace GameBox_v2
 				pb.MouseClick += Item_Click;
 				FileVersionInfo fi = FileVersionInfo.GetVersionInfo(a);
 				string name = fi.ProductName;
-				if(new NameField(name).ShowDialog() == DialogResult.OK){
-					name = NameField.name;
-					if(name == "")
-						name = Path.GetFileNameWithoutExtension(a);
-				}
-				Label lb = new Label {Name = a + "1", Text = name};
+				if(name == "")
+					name = Path.GetFileNameWithoutExtension(a);
+				System.Text.StringBuilder newText = new System.Text.StringBuilder(name.Length * 2);
+				newText.Append(name[0]);
+				for (int i = 1; i < name.Length; i++)
+        		{
+            		if (char.IsUpper(name[i]))
+                		if (name[i - 1] != ' ' && !char.IsUpper(name[i - 1]))
+                    		newText.Append(' ');
+            		newText.Append(name[i]);
+        		}
+				Label lb = new Label {Name = a + "1", Text = newText.ToString()};
 				lb.MouseClick += Item_Click;
 				lb.Font = new Font(lb.Font.Name, 24,FontStyle.Bold);
 				lb.AutoSize = true;
@@ -140,7 +146,7 @@ namespace GameBox_v2
 		void Item_Click(object sender, MouseEventArgs e)
         {
 			current_item = GetControlUnderMouse();
-			current_item_name = Path.GetFileName(current_item.Name);
+			current_item_name = current_item.Controls[0].Text;
 			
 			if (e.Button == MouseButtons.Left){
 				ButtonSet(System.Diagnostics.Process.Start(current_item.Name), int.Parse(current_item.Tag.ToString()));

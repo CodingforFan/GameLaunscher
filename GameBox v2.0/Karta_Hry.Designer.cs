@@ -42,17 +42,18 @@ namespace GameBox_v2
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
-			this.textBox1 = new System.Windows.Forms.TextBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// label1
 			// 
-			this.label1.Location = new System.Drawing.Point(13, 272);
+			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.label1.Location = new System.Drawing.Point(12, 272);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(259, 23);
 			this.label1.TabIndex = 0;
 			this.label1.Text = "label1";
+			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// label2
 			// 
@@ -64,29 +65,21 @@ namespace GameBox_v2
 			// 
 			// pictureBox1
 			// 
+			this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
 			this.pictureBox1.Location = new System.Drawing.Point(13, 12);
 			this.pictureBox1.Name = "pictureBox1";
 			this.pictureBox1.Size = new System.Drawing.Size(259, 257);
+			this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.pictureBox1.TabIndex = 2;
 			this.pictureBox1.TabStop = false;
-			// 
-			// textBox1
-			// 
-			this.textBox1.Location = new System.Drawing.Point(82, 274);
-			this.textBox1.MaxLength = 999999999;
-			this.textBox1.Multiline = true;
-			this.textBox1.Name = "textBox1";
-			this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.textBox1.Size = new System.Drawing.Size(190, 147);
-			this.textBox1.TabIndex = 3;
-			this.textBox1.TextChanged += new System.EventHandler(this.TextBox1TextChanged);
 			// 
 			// Karta_Hry
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
 			this.ClientSize = new System.Drawing.Size(284, 422);
-			this.Controls.Add(this.textBox1);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.pictureBox1);
@@ -95,8 +88,7 @@ namespace GameBox_v2
 			this.Load += new System.EventHandler(this.Karta_HryLoad);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
-			this.PerformLayout();
+
 		}
-		private System.Windows.Forms.TextBox textBox1;
 	}
 }

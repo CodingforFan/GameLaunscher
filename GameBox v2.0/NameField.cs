@@ -35,8 +35,10 @@ namespace GameBox_v2
 		}
 		void Button1Click(object sender, EventArgs e)
 		{
-			name = textBox1.Text;
-			Dispose();
+			if(textBox1.Text != string.Empty){
+				name = textBox1.Text;
+				Dispose();
+			}
 		}
 		void NameFieldLoad(object sender, EventArgs e)
 		{

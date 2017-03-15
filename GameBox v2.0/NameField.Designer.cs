@@ -52,9 +52,9 @@ namespace GameBox_v2
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(414, 31);
 			this.label1.TabIndex = 0;
-			this.label1.Text = "Je toto jméno hry, kterou jste vybraly?                                          " +
-	"                             Pokud ne tak ho prosím vložte pro správné načtení i" +
-	"nformací.";
+			this.label1.Text = "Je toto jméno hry, kterou jste vybrali?                                          " +
+	"                             Pokud ne, tak ho prosím vložte pro správné načtení " +
+	"informací.";
 			// 
 			// textBox1
 			// 
