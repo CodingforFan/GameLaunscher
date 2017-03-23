@@ -102,10 +102,9 @@ namespace GameBox_v2
 			}
 				
 			if (a.Contains(".exe")){
-			
-				PictureBox pb = new PictureBox {Name = a,Size = new Size(300,150),BackgroundImageLayout = ImageLayout.Zoom, BackgroundImage = Icon.ExtractAssociatedIcon(a).ToBitmap()};
-				pb.Tag = flowLayoutPanel1.Controls.Count.ToString();
-				pb.MouseClick += Item_Click;
+				
+				
+
 				FileVersionInfo fi = FileVersionInfo.GetVersionInfo(a);
 				string name = fi.ProductName;
 				if(name == "")
@@ -119,6 +118,13 @@ namespace GameBox_v2
                     		newText.Append(' ');
             		newText.Append(name[i]);
         		}
+				Image ii = Icon.ExtractAssociatedIcon(a).ToBitmap();
+				if (File.Exists("./coverlib/" + newText + ".png" )||File.Exists("./coverlib/" + newText + ".jpg" )||File.Exists("./coverlib/" + newText + ".gif" )){
+					ii = Image.FromFile("./coverlib/" + newText + ".jpg" );
+				}
+				PictureBox pb = new PictureBox {Name = a,Size = new Size(300,150),BackgroundImageLayout = ImageLayout.Zoom, BackgroundImage = ii};
+				pb.Tag = flowLayoutPanel1.Controls.Count.ToString();
+				pb.MouseClick += Item_Click;
 				Label lb = new Label {Name = a + "1", Text = newText.ToString()};
 				lb.MouseClick += Item_Click;
 				lb.Font = new Font(lb.Font.Name, 24,FontStyle.Bold);
@@ -283,6 +289,39 @@ namespace GameBox_v2
 		void ToolStripMenuItem1Click(object sender, EventArgs e)
 		{
 			new Karta_Hry(current_item_name).Show();
+		}
+		void MainFormFormClosing(object sender, FormClosingEventArgs e)
+		{
+			LauncherContent();
+		}
+		void LauncherContent(){
+			foreach(Control a in flowLayoutPanel1.Controls){
+				int sets = int.Parse(a.Tag.ToString());
+				if(datas.Count > sets){
+					if(datas[sets] != null){
+						int num = 0;
+						foreach(string s in datas[sets].Split('|')){num++;}
+						if(num == 3){
+							datas[sets] += "|" + a.Name;
+						}else if(num == 2){
+							datas[sets] +="00;00;00" + "|" + a.Name;
+						}else if(num <= 1){
+							datas[sets] = Path.GetFileName(a.Name).Replace(".exe", string.Empty) + "|" + "00;00;00" + "|" + a.Name;
+						}
+					}else{
+						datas[sets] = Path.GetFileName(a.Name).Replace(".exe", string.Empty) + "|" + "00;00;00" + "|" + a.Name;
+					}
+				}else{
+					for(int i = 0; i <= sets; i++){
+						if(i == sets){
+							datas.Add(Path.GetFileName(a.Name).Replace(".exe", string.Empty) + "|" + "00;00;00" + "|" + a.Name);
+						}else{
+							datas.Add(null);
+						}
+					}
+				}
+			}
+			SaveData();
 		}
 	}
 }

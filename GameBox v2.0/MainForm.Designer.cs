@@ -137,6 +137,7 @@ namespace GameBox_v2
 			this.Name = "MainForm";
 			this.Text = "GameBox v2.0";
 			this.Activated += new System.EventHandler(this.MainFormActivated);
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormFormClosing);
 			this.Load += new System.EventHandler(this.MainFormLoad);
 			this.contextMenuStrip1.ResumeLayout(false);
 			this.ResumeLayout(false);

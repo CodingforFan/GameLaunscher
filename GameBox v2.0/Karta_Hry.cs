@@ -38,13 +38,6 @@ namespace GameBox_v2
 
 		void Karta_HryLoad(object sender, EventArgs e)
 		{
-//			try{
-//				wb1.Url = new Uri("https://www.databaze-her.cz/hry/" + G_Name.Replace(" ","-"));
-//				string gg = wb1.Document.Body.ToString();
-//				MessageBox.Show("https://www.databaze-her.cz/hry/" + G_Name.Replace(" ","-"));
-//				MessageBox.Show(gg);
-//			}catch{
-//			}
 			while(tryAgain){
 				try{
 					using(System.Net.WebClient client = new System.Net.WebClient()){
@@ -79,6 +72,10 @@ namespace GameBox_v2
 					}
 				}
 			}
+		}
+		void PictureBox1Click(object sender, EventArgs e)
+		{
+	
 		}
 	}
 }
