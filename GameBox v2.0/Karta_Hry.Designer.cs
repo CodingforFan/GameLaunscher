@@ -17,6 +17,8 @@ namespace GameBox_v2
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.PictureBox pictureBox1;
+		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+		private System.Windows.Forms.ToolStripMenuItem downloadImageToolStripMenuItem;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -39,10 +41,14 @@ namespace GameBox_v2
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.downloadImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+			this.contextMenuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -72,7 +78,21 @@ namespace GameBox_v2
 			this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.pictureBox1.TabIndex = 2;
 			this.pictureBox1.TabStop = false;
-			this.pictureBox1.Click += new System.EventHandler(this.PictureBox1Click);
+			this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBox1MouseDown);
+			// 
+			// contextMenuStrip1
+			// 
+			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.downloadImageToolStripMenuItem});
+			this.contextMenuStrip1.Name = "contextMenuStrip1";
+			this.contextMenuStrip1.Size = new System.Drawing.Size(165, 26);
+			// 
+			// downloadImageToolStripMenuItem
+			// 
+			this.downloadImageToolStripMenuItem.Name = "downloadImageToolStripMenuItem";
+			this.downloadImageToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+			this.downloadImageToolStripMenuItem.Text = "Download Image";
+			this.downloadImageToolStripMenuItem.Click += new System.EventHandler(this.DownloadImageToolStripMenuItemClick);
 			// 
 			// Karta_Hry
 			// 
@@ -87,7 +107,9 @@ namespace GameBox_v2
 			this.Name = "Karta_Hry";
 			this.Text = "Karta_Hry";
 			this.Load += new System.EventHandler(this.Karta_HryLoad);
+			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Karta_HryMouseDown);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+			this.contextMenuStrip1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}

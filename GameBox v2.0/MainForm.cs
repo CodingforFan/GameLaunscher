@@ -119,15 +119,19 @@ namespace GameBox_v2
             		newText.Append(name[i]);
         		}
 				Image ii = Icon.ExtractAssociatedIcon(a).ToBitmap();
-				if (File.Exists("./coverlib/" + newText + ".png" )||File.Exists("./coverlib/" + newText + ".jpg" )||File.Exists("./coverlib/" + newText + ".gif" )){
+				if (File.Exists("./coverlib/" + newText + ".png" )){
+					ii = Image.FromFile("./coverlib/" + newText + ".png" );
+				} else if (File.Exists("./coverlib/" + newText + ".jpg" )){
 					ii = Image.FromFile("./coverlib/" + newText + ".jpg" );
+				} else if (File.Exists("./coverlib/" + newText + ".gif" )){
+					ii = Image.FromFile("./coverlib/" + newText + ".gif" );
 				}
-				PictureBox pb = new PictureBox {Name = a,Size = new Size(300,150),BackgroundImageLayout = ImageLayout.Zoom, BackgroundImage = ii};
+				PictureBox pb = new PictureBox {Name = a,Size = new Size(180,254),BackgroundImageLayout = ImageLayout.Zoom, BackgroundImage = ii};
 				pb.Tag = flowLayoutPanel1.Controls.Count.ToString();
 				pb.MouseClick += Item_Click;
 				Label lb = new Label {Name = a + "1", Text = newText.ToString()};
 				lb.MouseClick += Item_Click;
-				lb.Font = new Font(lb.Font.Name, 24,FontStyle.Bold);
+				lb.Font = new Font(lb.Font.Name, 19,FontStyle.Bold);
 				lb.AutoSize = true;
 				lb.BackColor = Color.Transparent;
 				pb.Controls.Add(lb);
@@ -322,6 +326,10 @@ namespace GameBox_v2
 				}
 			}
 			SaveData();
+		}
+		void FlowLayoutPanel1Paint(object sender, PaintEventArgs e)
+		{
+	
 		}
 	}
 }

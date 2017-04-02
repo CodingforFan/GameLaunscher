@@ -24,6 +24,7 @@ namespace GameBox_v2
 		static string G_Name = "";
 		string webText;
 		bool tryAgain = true;
+		static string img_utl = "";
 		public Karta_Hry(string gamename = "")
 		{
 			//
@@ -51,8 +52,9 @@ namespace GameBox_v2
 						int posS = webText.IndexOf("<img src=\"/obrazky/hry_krabice/");
 						string myCapturedText = webText.Substring(posS, webText.IndexOf('>',posS) - posS + 1).Remove(0, 10);
 						int pos = myCapturedText.IndexOf("?_");
-						pictureBox1.Load("https://www.databaze-her.cz" + myCapturedText.Remove(pos, (myCapturedText.Length - pos)));
-					
+						img_utl = "https://www.databaze-her.cz" + myCapturedText.Remove(pos, (myCapturedText.Length - pos));
+						pictureBox1.Load(img_utl);
+						
 						posS = webText.IndexOf("<div id=\"game-description\"");
 						myCapturedText = webText.Substring(posS, webText.IndexOf("</div>",posS) - posS).Remove(0, 10);
 						pos = myCapturedText.IndexOf('>', 0);
@@ -73,8 +75,27 @@ namespace GameBox_v2
 				}
 			}
 		}
-		void PictureBox1Click(object sender, EventArgs e)
+		
+		void PictureBox1Click(object sender, MouseEventArgs e)
 		{
+				contextMenuStrip1.Show( MousePosition); 
+		}
+		
+		void DownloadImageToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			MessageBox.Show(G_Name);
+			using(System.Net.WebClient client = new System.Net.WebClient())
+			{
+   				client.DownloadFile(img_utl, "./coverlib/" + G_Name + img_utl.Substring(img_utl.Length - 4));
+			}
+		}
+		void Karta_HryMouseDown(object sender, MouseEventArgs e)
+		{
+	
+		}
+		void PictureBox1MouseDown(object sender, MouseEventArgs e)
+		{
+			contextMenuStrip1.Show( MousePosition); 
 	
 		}
 	}
