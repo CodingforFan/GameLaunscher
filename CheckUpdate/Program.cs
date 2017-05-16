@@ -33,7 +33,7 @@ namespace CheckUpdate
         System.IO.StreamReader reader = new System.IO.StreamReader(stream);
         String version = //(jen čísla "2.0.0." ) Size proměné reader.ReadLine();
         
-	public static void Start(){
+		void Start(){
         	if (version.Contains(this.ProductVersion)) {
 				foreach (System.Diagnostics.Process proces in System.Diagnostics.Process.GetProcesses()) {
 					if (proces.ProcessName == "Skipe"){
