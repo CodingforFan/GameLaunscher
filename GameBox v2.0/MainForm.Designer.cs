@@ -16,7 +16,7 @@ namespace GameBox_v2
 		private System.ComponentModel.IContainer components = null;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
-		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+		public System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
 		private System.Windows.Forms.Timer update;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;

@@ -31,7 +31,9 @@ namespace GameBox_v2
 		public int activeGame = -1;
 		public string processName;
 		public System.Diagnostics.Process process;
-		public string listing = "";		
+		public string listing = "";
+		public static MainForm frm;
+		public string[] sep = {"|"};
 		
 		public MainForm()
 		{
@@ -46,6 +48,7 @@ namespace GameBox_v2
 		}
 		void MainFormLoad(object sender, EventArgs e)
 		{
+			frm = this;
 			datas = new List<string>();
 			if(File.Exists("./config/datalib.glconfig")){
 				int countLines = File.ReadAllLines("./config/datalib.glconfig").Length;
@@ -60,7 +63,7 @@ namespace GameBox_v2
 						string a = "";
 						int num = 0;
 						if(datas[g] != null){
-							foreach(string d in datas[g].Split('|')){
+							foreach(string d in datas[g].Split(sep, StringSplitOptions.RemoveEmptyEntries)){
 								if(num == 2){
 									a = d;
 								}
@@ -90,43 +93,38 @@ namespace GameBox_v2
 		{
 			foreach(string a in openFileDialog1.FileNames)
 			{
-				additem(a);
+				try{
+					additem(a);
+				}catch{
+					MessageBox.Show("Game cannot add " + NameCleaner(Path.GetFileNameWithoutExtension(a)));
+				}
 			}
 		}
 		void additem (string a){
-			
-			foreach ( Control c1 in flowLayoutPanel1.Controls ) {
-				if (c1.Name.Contains(a)){
-					goto pidano;
+			if(flowLayoutPanel1.Controls.Count > 0){
+				foreach (Control c1 in flowLayoutPanel1.Controls) {
+					if (c1.Name.Contains(a)){
+						goto pidano;
+					}
 				}
 			}
-				
-			if (a.Contains(".exe")){
+			if(a.Contains(".exe")){
 				FileVersionInfo fi = FileVersionInfo.GetVersionInfo(a);
 				string name = fi.ProductName;
-				if(name == "")
+				if(name == "" || name == string.Empty || name == " " || name == null)
 					name = Path.GetFileNameWithoutExtension(a);
-				System.Text.StringBuilder newText = new System.Text.StringBuilder(name.Length * 2);
-				newText.Append(name[0]);
-				for (int i = 1; i < name.Length; i++)
-        		{
-            		if (char.IsUpper(name[i]))
-                		if (name[i - 1] != ' ' && !char.IsUpper(name[i - 1]))
-                    		newText.Append(' ');
-            		newText.Append(name[i]);
-        		}
+				name = NameCleaner(name);
 				Image ii = Icon.ExtractAssociatedIcon(a).ToBitmap();
-				if (File.Exists("./coverlib/" + newText + ".png" )){
-					ii = Image.FromFile("./coverlib/" + newText + ".png" );
-				} else if (File.Exists("./coverlib/" + newText + ".jpg" )){
-					ii = Image.FromFile("./coverlib/" + newText + ".jpg" );
-				} else if (File.Exists("./coverlib/" + newText + ".gif" )){
-					ii = Image.FromFile("./coverlib/" + newText + ".gif" );
+				if (File.Exists("./coverlib/" + name + ".png" )){
+					ii = Image.FromFile("./coverlib/" + name + ".png" );
+				} else if (File.Exists("./coverlib/" + name + ".jpg" )){
+					ii = Image.FromFile("./coverlib/" + name + ".jpg" );
+				} else if (File.Exists("./coverlib/" + name + ".gif" )){
+					ii = Image.FromFile("./coverlib/" + name + ".gif" );
 				}
 				PictureBox pb = new PictureBox {Name = a,Size = new Size(180,254),BackgroundImageLayout = ImageLayout.Zoom, BackgroundImage = ii};
-				pb.Tag = flowLayoutPanel1.Controls.Count.ToString();
 				pb.MouseClick += Item_Click;
-				Label lb = new Label {Name = a + "1", Text = newText.ToString()};
+				Label lb = new Label {Name = a, Text = name};
 				lb.MouseClick += Item_Click;
 				lb.Font = new Font(new FontFamily("Arial"), 10,FontStyle.Bold);
 				lb.TextAlign = ContentAlignment.MiddleCenter;
@@ -135,12 +133,11 @@ namespace GameBox_v2
 				lb.AutoEllipsis = true;
 				lb.BackColor = Color.Transparent;
 				pb.Controls.Add(lb);
-				
+				pb.Tag = flowLayoutPanel1.Controls.Count.ToString();	
 				flowLayoutPanel1.Controls.Add(pb);
-					
 			}
 			goto mustek;
-			pidano: MessageBox.Show("Položka: <b>" + Path.GetFileName(a).Replace(".exe", string.Empty) + "<b> je již přidána!");
+			pidano: MessageBox.Show("Položka: <b>" + NameCleaner(Path.GetFileName(a)) + "<b> je již přidána!");
 			mustek:;
 			
 		}
@@ -159,7 +156,8 @@ namespace GameBox_v2
 			current_item_name = current_item.Controls[0].Text;
 			
 			if (e.Button == MouseButtons.Left){
-				ButtonSet(System.Diagnostics.Process.Start(current_item.Name), int.Parse(current_item.Tag.ToString()));
+					MessageBox.Show(current_item.Tag.ToString());
+					ButtonSet(System.Diagnostics.Process.Start(current_item.Name), int.Parse(current_item.Tag.ToString()));
 			}else if (e.Button == MouseButtons.Right){
 				contextMenuStrip1.Show( MousePosition); 
 				//MessageBox.Show(GetControlUnderMouse().Name);
@@ -189,9 +187,9 @@ namespace GameBox_v2
 			if(File.Exists(localfilenames)){
 				Directory.CreateDirectory("./coverlib");
 				MessageBox.Show(current_item_name + current_item.ToString());
-				File.Copy(openFileDialog2.FileName, "./coverlib/" + current_item_name.Replace(".exe", string.Empty) + "." + localfilenames.Split('.')[1], true);
+				File.Copy(openFileDialog2.FileName, "./coverlib/" + NameCleaner(current_item_name) + "." + localfilenames.Split('.')[1], true);
 
-				current_item.BackgroundImage = Image.FromFile("./coverlib/"+ current_item_name.Replace(".exe", string.Empty) +"." + localfilenames.Split('.')[1]);
+				current_item.BackgroundImage = Image.FromFile("./coverlib/"+ NameCleaner(current_item_name) +"." + localfilenames.Split('.')[1]);
     		}	
 		}
 		void ZměnitObrázekToolStripMenuItemClick(object sender, EventArgs e)
@@ -206,19 +204,19 @@ namespace GameBox_v2
 					if(datas.Count > activeGame){
 						if(datas[activeGame] != null){
 							int num = 0;
-							foreach(string t in datas[activeGame].Split('|')){
+							foreach(string t in datas[activeGame].Split(sep, StringSplitOptions.RemoveEmptyEntries)){
 								if(num == 2){
 									datas[activeGame].Replace(t, HowLongPlay(t));
 								}
 								num++;
 							}
 						}else{
-							datas[activeGame] = processName.Replace(".exe", string.Empty) + "|" + HowLongPlay("00;00;00");
+							datas[activeGame] = "|" + NameCleaner(processName) + "||" + HowLongPlay("00;00;00") + "|";
 						}
 					}else{
 						for(int i = 0; i <= activeGame; i++){
 							if(i == activeGame){
-								datas.Add(processName.Replace(".exe", string.Empty) + "|" + HowLongPlay("00;00;00"));
+								datas.Add("|" + NameCleaner(processName) + "||" + HowLongPlay("00;00;00") + "|");
 							}else{
 								datas.Add(null);
 							}
@@ -304,21 +302,21 @@ namespace GameBox_v2
 				if(datas.Count > sets){
 					if(datas[sets] != null){
 						int num = 0;
-						foreach(string s in datas[sets].Split('|')){num++;}
+						foreach(string s in datas[sets].Split(sep, StringSplitOptions.RemoveEmptyEntries)){num++;}
 						if(num == 3){
-							datas[sets] += "|" + a.Name;
+							datas[sets] += "|" + a.Name + "|";
 						}else if(num == 2){
-							datas[sets] +="00;00;00" + "|" + a.Name;
+							datas[sets] += "|" +"00;00;00" + "||" + a.Name + "|";
 						}else if(num <= 1){
-							datas[sets] = Path.GetFileName(a.Name).Replace(".exe", string.Empty) + "|" + "00;00;00" + "|" + a.Name;
+							datas[sets] = "|" + NameCleaner(Path.GetFileName(a.Name)) + "||" + "00;00;00" + "||" + a.Name + "|";
 						}
 					}else{
-						datas[sets] = Path.GetFileName(a.Name).Replace(".exe", string.Empty) + "|" + "00;00;00" + "|" + a.Name;
+						datas[sets] = "|" + NameCleaner(Path.GetFileName(a.Name)) + "||" + "00;00;00" + "||" + a.Name+ "|";
 					}
 				}else{
 					for(int i = 0; i <= sets; i++){
 						if(i == sets){
-							datas.Add(Path.GetFileName(a.Name).Replace(".exe", string.Empty) + "|" + "00;00;00" + "|" + a.Name);
+							datas.Add("|" + NameCleaner(Path.GetFileName(a.Name)) + "||" + "00;00;00" + "||" + a.Name + "|");
 						}else{
 							datas.Add(null);
 						}
@@ -333,13 +331,42 @@ namespace GameBox_v2
 		}
 		
 		string NameCleaner(string name){
-			if(name.Contains(".exe")){
-				name.Replace(".exe", string.Empty);
+			string[] notText = {".exe","launcher","Launcher"};
+			string[] mezText = {"_","-",","};
+			string[,] spojText = {{"(","{","["},{")","}","]"}};
+			int pos;
+			int pos2;
+			int num = 0;
+			foreach(string localText in notText){
+				if(name.Contains(localText)){
+					name = name.Replace(localText, string.Empty);
+				}
 			}
-			//if(name.s){
-				
-			//}
-			return name;
+			foreach(string localText in mezText){
+				if(name.Contains(localText)){
+					name = name.Replace(localText, " ");
+				}
+			}
+			foreach(string g in spojText){
+				if((pos = name.IndexOf(g)) != -1){
+					if((pos2 = name.IndexOf(spojText[1,num], pos)) != -1){
+						name = name.Remove(pos - 1, pos2);
+					}
+				}
+				num++;
+			}
+			System.Text.StringBuilder newText = new System.Text.StringBuilder(name.Length * 2);
+			newText.Append(name[0]);
+			for (int i = 1; i < name.Length; i++)
+        	{
+				if (char.IsUpper(name[i])){
+					if (name[i - 1] != ' ' && !char.IsUpper(name[i - 1]) && name[i - 1] != '.'){
+                    	newText.Append(' ');
+					}
+				}
+            	newText.Append(name[i]);
+        	}
+			return newText.ToString();
 		}
 	}
 }

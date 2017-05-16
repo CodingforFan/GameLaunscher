@@ -68,9 +68,22 @@ namespace GameBox_v2
 					tryAgain = false;
 				}catch{
 					if(new NameField(G_Name).ShowDialog() == DialogResult.OK){
+						for(int i = 0; i < MainForm.frm.flowLayoutPanel1.Controls.Count; i++){
+							if(MainForm.frm.flowLayoutPanel1.Controls[i].Name.Contains(G_Name)){
+								MainForm.frm.flowLayoutPanel1.Controls[i].GetChildAtPoint(new Point(0,0)).Text = NameField.name;
+								int id = int.Parse(MainForm.frm.flowLayoutPanel1.Controls[i].Tag.ToString());
+								MessageBox.Show(id.ToString());
+								if(id < MainForm.frm.datas.Count){
+									MainForm.frm.datas[id] = MainForm.frm.datas[id].Replace(G_Name, NameField.name);
+									MainForm.frm.SaveData();
+									MessageBox.Show("save! ");
+								}
+							}
+						}
 						G_Name = NameField.name;
 					}else{
 						tryAgain = false;
+						this.Hide();
 					}
 				}
 			}
