@@ -102,9 +102,6 @@ namespace GameBox_v2
 			}
 				
 			if (a.Contains(".exe")){
-				
-				
-
 				FileVersionInfo fi = FileVersionInfo.GetVersionInfo(a);
 				string name = fi.ProductName;
 				if(name == "")
@@ -131,8 +128,11 @@ namespace GameBox_v2
 				pb.MouseClick += Item_Click;
 				Label lb = new Label {Name = a + "1", Text = newText.ToString()};
 				lb.MouseClick += Item_Click;
-				lb.Font = new Font(lb.Font.Name, 19,FontStyle.Bold);
-				lb.AutoSize = true;
+				lb.Font = new Font(new FontFamily("Arial"), 10,FontStyle.Bold);
+				lb.TextAlign = ContentAlignment.MiddleCenter;
+				lb.Location = new Point(0,0);
+				lb.Size = new Size(180,35);
+				lb.AutoEllipsis = true;
 				lb.BackColor = Color.Transparent;
 				pb.Controls.Add(lb);
 				
@@ -330,6 +330,16 @@ namespace GameBox_v2
 		void FlowLayoutPanel1Paint(object sender, PaintEventArgs e)
 		{
 	
+		}
+		
+		string NameCleaner(string name){
+			if(name.Contains(".exe")){
+				name.Replace(".exe", string.Empty);
+			}
+			//if(name.s){
+				
+			//}
+			return name;
 		}
 	}
 }

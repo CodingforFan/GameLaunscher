@@ -109,20 +109,20 @@ namespace GameBox_v2
 			this.změnitObrázekToolStripMenuItem,
 			this.toolStripMenuItem1});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(181, 48);
+			this.contextMenuStrip1.Size = new System.Drawing.Size(157, 48);
 			// 
 			// změnitObrázekToolStripMenuItem
 			// 
 			this.změnitObrázekToolStripMenuItem.Name = "změnitObrázekToolStripMenuItem";
-			this.změnitObrázekToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.změnitObrázekToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
 			this.změnitObrázekToolStripMenuItem.Text = "Změnit obrázek";
 			this.změnitObrázekToolStripMenuItem.Click += new System.EventHandler(this.ZměnitObrázekToolStripMenuItemClick);
 			// 
 			// toolStripMenuItem1
 			// 
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-			this.toolStripMenuItem1.Text = "toolStripMenuItem1";
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(156, 22);
+			this.toolStripMenuItem1.Text = "Informace";
 			this.toolStripMenuItem1.Click += new System.EventHandler(this.ToolStripMenuItem1Click);
 			// 
 			// openFileDialog2
