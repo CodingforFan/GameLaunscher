@@ -15,29 +15,30 @@ namespace CheckUpdate
 	/// </summary>
 	public class Update
 	{
-		String name = "/Game Launscher.exe";
-		String directory = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
-		System.Net.WebClient wClient = new System.Net.WebClient();
-		String subject = directory + name;
-		System.Net.WebClient web = new System.Net.WebClient();
-		System.IO.Stream stream = web.OpenRead("/test url/version.txt");
-        System.IO.StreamReader reader = new System.IO.StreamReader(stream);
-        String version = /*(jen čísla "2.0.0." ) Size proměné reader.ReadLine()*/;
+		static String name = "/Game Launscher.exe";
+		static String directory = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
+		static System.Net.WebClient wClient = new System.Net.WebClient();
+		static String subject = directory + name;
+		static System.Net.WebClient web = new System.Net.WebClient();
+		static System.IO.Stream stream = web.OpenRead("/test url/version.txt");
+        static System.IO.StreamReader reader = new System.IO.StreamReader(stream);
+        static String line = reader.ReadLine();
+        static String version = line.Substring(line.Length - 4);
         	
 		public static void Start(){
-        	if (version.Contains(this.ProductVersion)) {
+        	if (version.Contains("c"/*číslo aktuální verze*/)) {
 				foreach (System.Diagnostics.Process proces in System.Diagnostics.Process.GetProcesses()) {
 					if (proces.ProcessName == "Skipe"){
-						this.Close();
-						getUpdate();
+						//Jak zavřít nadřazený form
+						Get();
 					} else {
-						getUpdate();
+						Get();
 					}
 				}
         	}
 		}
         
-        private void Get(){
+        static void Get(){
 			if (System.IO.File.Exists(subject)){
 				System.IO.File.Delete(subject);
 			}
@@ -46,11 +47,11 @@ namespace CheckUpdate
             wClient.DownloadFileAsync(new Uri("link"), name);
         }
 
-        private void Completed(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        static void Completed(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-            System.Windows.Forms.MessageBox.Show("Download completed!");
+            //System. MessageBox.Show("Download completed!");
             System.Diagnostics.Process.Start(directory + name);
-            this.Close();
+			//Jak zavřít nadřazený form
         } 
 	}
 }
