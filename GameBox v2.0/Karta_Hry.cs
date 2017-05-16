@@ -108,9 +108,10 @@ namespace GameBox_v2
 		System.Net.WebClient web = new System.Net.WebClient();
 		System.IO.Stream stream = web.OpenRead("");
         System.IO.StreamReader reader = new System.IO.StreamReader(stream);
+        String version = //(jen čísla "2.0.0." ) Size proměné reader.ReadLine();
         
 		void Start(){
-        	if (reader.ReadLine().Contains(this.ProductVersion)) {
+        	if (version.Contains(this.ProductVersion)) {
 				foreach (System.Diagnostics.Process proces in System.Diagnostics.Process.GetProcesses()) {
 					if (proces.ProcessName == "Skipe"){
 						this.Close();
