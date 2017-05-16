@@ -48,7 +48,7 @@ namespace CheckUpdate
 
         private void Completed(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-            MessageBox.Show("Download completed!");
+            System.Windows.Forms.MessageBox.Show("Download completed!");
             System.Diagnostics.Process.Start(directory + name);
             this.Close();
         } 
