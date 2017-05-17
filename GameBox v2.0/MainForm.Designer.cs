@@ -93,8 +93,6 @@ namespace GameBox_v2
 			// 
 			// label2
 			// 
-			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
 			this.label2.AutoSize = true;
 			this.label2.Location = new System.Drawing.Point(399, 16);
 			this.label2.Name = "label2";
@@ -102,6 +100,7 @@ namespace GameBox_v2
 			this.label2.TabIndex = 2;
 			this.label2.Text = "label2";
 			this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label2.Click += new System.EventHandler(this.Label2Click);
 			// 
 			// contextMenuStrip1
 			// 

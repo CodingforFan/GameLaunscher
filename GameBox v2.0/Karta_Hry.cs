@@ -74,7 +74,8 @@ namespace GameBox_v2
 								int id = int.Parse(MainForm.frm.flowLayoutPanel1.Controls[i].Tag.ToString());
 								MessageBox.Show(id.ToString());
 								if(id < MainForm.frm.datas.Count){
-									MainForm.frm.datas[id] = MainForm.frm.datas[id].Replace(G_Name, NameField.name);
+									int pos = MainForm.frm.datas[id].IndexOf(G_Name);
+									MainForm.frm.datas[id] = MainForm.frm.datas[id].Substring(0, pos).Replace(G_Name, NameField.name);
 									MainForm.frm.SaveData();
 									MessageBox.Show("save! ");
 								}

@@ -70,9 +70,10 @@ namespace GameBox_v2
 								num ++;
 							}
 						}
-						if(a != ""){
-							
-							additem(a);
+						if(a != "" && a != " " && a != null && a != string.Empty){
+							if(File.Exists(a)){
+								additem(a, g);
+							}
 						}
 					}
 				}
@@ -100,7 +101,7 @@ namespace GameBox_v2
 				}
 			}
 		}
-		void additem (string a){
+		void additem (string a, int ids = -1){
 			if(flowLayoutPanel1.Controls.Count > 0){
 				foreach (Control c1 in flowLayoutPanel1.Controls) {
 					if (c1.Name.Contains(a)){
@@ -109,11 +110,17 @@ namespace GameBox_v2
 				}
 			}
 			if(a.Contains(".exe")){
+				string name = "";
 				FileVersionInfo fi = FileVersionInfo.GetVersionInfo(a);
-				string name = fi.ProductName;
+				name = fi.ProductName;
 				if(name == "" || name == string.Empty || name == " " || name == null)
 					name = Path.GetFileNameWithoutExtension(a);
 				name = NameCleaner(name);
+				if(ids != -1){
+					if(datas.Count > ids){
+						name = datas[ids].Split(sep, StringSplitOptions.RemoveEmptyEntries)[0];
+					}
+				}
 				Image ii = Icon.ExtractAssociatedIcon(a).ToBitmap();
 				if (File.Exists("./coverlib/" + name + ".png" )){
 					ii = Image.FromFile("./coverlib/" + name + ".png" );
@@ -139,7 +146,6 @@ namespace GameBox_v2
 			goto mustek;
 			pidano: MessageBox.Show("Položka: <b>" + NameCleaner(Path.GetFileName(a)) + "<b> je již přidána!");
 			mustek:;
-			
 		}
 		Control GetControlUnderMouse() {
     		foreach ( Control c in flowLayoutPanel1.Controls ) {
@@ -228,18 +234,18 @@ namespace GameBox_v2
 			}
 		}
 		public void SaveData(){
-			if(System.IO.File.Exists("./config/datalib.glconfig")){
-				sw = new System.IO.StreamWriter("./config/datalib.glconfig", false);
+			if(File.Exists("./config/datalib.glconfig")){
+				sw = new StreamWriter("./config/datalib.glconfig", false);
 				for(int i = 0; i < datas.Count; i++){
-					if(datas[i] != null){
+					if(datas[i] != null && datas[i] != "" && datas[i] != " " && datas[i] != string.Empty){
 						sw.Write(datas[i] + Environment.NewLine);
 					}
 				}
 				sw.Close();
 			}else{
-				sw = System.IO.File.CreateText("./config/datalib.glconfig");
+				sw = File.CreateText("./config/datalib.glconfig");
 				for(int i = 0; i < datas.Count; i++){
-					if(datas[i] != null){
+					if(datas[i] != null && datas[i] != "" && datas[i] != " " && datas[i] != string.Empty){
 						sw.Write(datas[i] + Environment.NewLine);
 					}
 				}
@@ -300,25 +306,33 @@ namespace GameBox_v2
 			foreach(Control a in flowLayoutPanel1.Controls){
 				int sets = int.Parse(a.Tag.ToString());
 				if(datas.Count > sets){
-					if(datas[sets] != null){
+					if(datas[sets] != null && datas[sets] != "" && datas[sets] != " " && datas[sets] != string.Empty){
 						int num = 0;
 						foreach(string s in datas[sets].Split(sep, StringSplitOptions.RemoveEmptyEntries)){num++;}
-						if(num == 3){
+						if(num == 2){
 							datas[sets] += "|" + a.Name + "|";
-						}else if(num == 2){
+						}else if(num == 1){
 							datas[sets] += "|" +"00;00;00" + "||" + a.Name + "|";
-						}else if(num <= 1){
-							datas[sets] = "|" + NameCleaner(Path.GetFileName(a.Name)) + "||" + "00;00;00" + "||" + a.Name + "|";
+						}else if(num <= 0){
+							datas[sets] = "|" + NameCleaner(a.GetChildAtPoint(new Point(0,0)).Text) + "||" + "00;00;00" + "||" + a.Name + "|";
 						}
 					}else{
-						datas[sets] = "|" + NameCleaner(Path.GetFileName(a.Name)) + "||" + "00;00;00" + "||" + a.Name+ "|";
+						datas[sets] = "|" + NameCleaner(a.GetChildAtPoint(new Point(0,0)).Text) + "||" + "00;00;00" + "||" + a.Name+ "|";
 					}
 				}else{
-					for(int i = 0; i <= sets; i++){
-						if(i == sets){
-							datas.Add("|" + NameCleaner(Path.GetFileName(a.Name)) + "||" + "00;00;00" + "||" + a.Name + "|");
+					for(int i = datas.Count; i <= sets; i++){
+						if(datas.Count <= i){
+							if(i == sets){
+								datas.Add("|" + NameCleaner(a.GetChildAtPoint(new Point(0,0)).Text) + "||" + "00;00;00" + "||" + a.Name + "|");
+							}else{
+								datas.Add("");
+							}
 						}else{
-							datas.Add(null);
+							if(i == sets){
+								datas[i] = "|" + NameCleaner(a.GetChildAtPoint(new Point(0,0)).Text) + "||" + "00;00;00" + "||" + a.Name+ "|";
+							}else{
+								datas[i] = "";
+							}
 						}
 					}
 				}
@@ -367,6 +381,10 @@ namespace GameBox_v2
             	newText.Append(name[i]);
         	}
 			return newText.ToString();
+		}
+		void Label2Click(object sender, EventArgs e)
+		{
+	
 		}
 	}
 }
