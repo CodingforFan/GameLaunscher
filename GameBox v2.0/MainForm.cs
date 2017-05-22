@@ -24,13 +24,13 @@ namespace GameBox_v2
 		static string current_item_name = null;
 		static Control current_item = null;
 		public List <string> datas = new List<string>();
-		public System.IO.StreamReader sr;
-		public System.IO.StreamWriter sw;
+		public StreamReader sr;
+		public StreamWriter sw;
 		public List <string> saveTime;
 		public bool gameIsRun = false;
 		public int activeGame = -1;
 		public string processName;
-		public System.Diagnostics.Process process;
+		public Process process;
 		public string listing = "";
 		public static MainForm frm;
 		public string[] sep = {"|"};
@@ -52,32 +52,17 @@ namespace GameBox_v2
 			datas = new List<string>();
 			if(File.Exists("./config/datalib.glconfig")){
 				int countLines = File.ReadAllLines("./config/datalib.glconfig").Length;
+				try{sr.Close();}catch{}
 				sr = new StreamReader("./config/datalib.glconfig");
 				if(sr.ReadToEnd().Length > 0){
-					sr.Close();
+					try{sr.Close();}catch{}
 					sr = new StreamReader("./config/datalib.glconfig");
 					for(int i = 0; i < countLines; i++){
 						datas.Add(sr.ReadLine());
 					}
-					for(int g = 0; g < datas.Count; g++){
-						string a = "";
-						int num = 0;
-						if(datas[g] != null){
-							foreach(string d in datas[g].Split(sep, StringSplitOptions.RemoveEmptyEntries)){
-								if(num == 2){
-									a = d;
-								}
-								num ++;
-							}
-						}
-						if(a != "" && a != " " && a != null && a != string.Empty){
-							if(File.Exists(a)){
-								additem(a, g);
-							}
-						}
-					}
+					GameReload();
 				}
-				sr.Close();
+				try{sr.Close();}catch{}
 			}else{
 				if(!Directory.Exists("./config")){
 					Directory.CreateDirectory("./config");
@@ -115,7 +100,15 @@ namespace GameBox_v2
 				name = fi.ProductName;
 				if(name == "" || name == string.Empty || name == " " || name == null)
 					name = Path.GetFileNameWithoutExtension(a);
-				name = NameCleaner(name);
+				bool named = true;
+				for(int i = 0; i < datas.Count; i++){
+					if(name.Contains(datas[i].Split(sep, StringSplitOptions.RemoveEmptyEntries)[0])){
+						named = false;
+					}
+				}
+				if(named){
+					name = NameCleaner(name);
+				}
 				if(ids != -1){
 					if(datas.Count > ids){
 						name = datas[ids].Split(sep, StringSplitOptions.RemoveEmptyEntries)[0];
@@ -140,8 +133,12 @@ namespace GameBox_v2
 				lb.AutoEllipsis = true;
 				lb.BackColor = Color.Transparent;
 				pb.Controls.Add(lb);
-				pb.Tag = flowLayoutPanel1.Controls.Count.ToString();	
+				pb.Tag = flowLayoutPanel1.Controls.Count.ToString();				
 				flowLayoutPanel1.Controls.Add(pb);
+				int id = -1;
+				if(int.TryParse(pb.Tag.ToString(), out id)){
+					LauncherContent(id);
+				}
 			}
 			goto mustek;
 			pidano: MessageBox.Show("Položka: <b>" + NameCleaner(Path.GetFileName(a)) + "<b> je již přidána!");
@@ -162,8 +159,13 @@ namespace GameBox_v2
 			current_item_name = current_item.Controls[0].Text;
 			
 			if (e.Button == MouseButtons.Left){
-					MessageBox.Show(current_item.Tag.ToString());
-					ButtonSet(System.Diagnostics.Process.Start(current_item.Name), int.Parse(current_item.Tag.ToString()));
+					int locInt;
+					if(int.TryParse(current_item.Tag.ToString(), out locInt)){
+						try{
+							ButtonSet(Process.Start(current_item.Name), locInt);
+						}catch{
+						}
+					}
 			}else if (e.Button == MouseButtons.Right){
 				contextMenuStrip1.Show( MousePosition); 
 				//MessageBox.Show(GetControlUnderMouse().Name);
@@ -174,6 +176,7 @@ namespace GameBox_v2
 		{
 			//CreateGraphics().DrawRectangle(new Pen(Color.Red, 1), new Rectangle(0, 0+30, Width-1, Height-31));
 			label2.Text = DateTime.Now.ToString("HH:mm");
+			label2.Location =  new Point((Width / 2) - (label2.Width/2), label2.Location.Y);
 		}
 		
 		public void ButtonSet(System.Diagnostics.Process processe, int ID){
@@ -192,10 +195,8 @@ namespace GameBox_v2
 			string localfilenames = openFileDialog2.FileName;
 			if(File.Exists(localfilenames)){
 				Directory.CreateDirectory("./coverlib");
-				MessageBox.Show(current_item_name + current_item.ToString());
-				File.Copy(openFileDialog2.FileName, "./coverlib/" + NameCleaner(current_item_name) + "." + localfilenames.Split('.')[1], true);
-
-				current_item.BackgroundImage = Image.FromFile("./coverlib/"+ NameCleaner(current_item_name) +"." + localfilenames.Split('.')[1]);
+				File.Copy(openFileDialog2.FileName, "./coverlib/" + current_item_name + "." + localfilenames.Split('.')[1], true);
+				current_item.BackgroundImage = Image.FromFile("./coverlib/"+ current_item_name +"." + localfilenames.Split('.')[1]);
     		}	
 		}
 		void ZměnitObrázekToolStripMenuItemClick(object sender, EventArgs e)
@@ -217,12 +218,12 @@ namespace GameBox_v2
 								num++;
 							}
 						}else{
-							datas[activeGame] = "|" + NameCleaner(processName) + "||" + HowLongPlay("00;00;00") + "|";
+							datas[activeGame] = "|" + processName + "||" + HowLongPlay("00;00;00") + "|";
 						}
 					}else{
 						for(int i = 0; i <= activeGame; i++){
 							if(i == activeGame){
-								datas.Add("|" + NameCleaner(processName) + "||" + HowLongPlay("00;00;00") + "|");
+								datas.Add("|" + processName + "||" + HowLongPlay("00;00;00") + "|");
 							}else{
 								datas.Add(null);
 							}
@@ -234,22 +235,26 @@ namespace GameBox_v2
 			}
 		}
 		public void SaveData(){
+			try{sw.Close();}catch{}
+			try{sr.Close();}catch{}
 			if(File.Exists("./config/datalib.glconfig")){
+				try{sw.Close();}catch{}
 				sw = new StreamWriter("./config/datalib.glconfig", false);
 				for(int i = 0; i < datas.Count; i++){
 					if(datas[i] != null && datas[i] != "" && datas[i] != " " && datas[i] != string.Empty){
 						sw.Write(datas[i] + Environment.NewLine);
 					}
 				}
-				sw.Close();
+				try{sw.Close();}catch{}
 			}else{
+				try{sw.Close();}catch{}
 				sw = File.CreateText("./config/datalib.glconfig");
 				for(int i = 0; i < datas.Count; i++){
 					if(datas[i] != null && datas[i] != "" && datas[i] != " " && datas[i] != string.Empty){
 						sw.Write(datas[i] + Environment.NewLine);
 					}
 				}
-				sw.Close();
+				try{sw.Close();}catch{}
 			}
 		}
 		
@@ -264,35 +269,38 @@ namespace GameBox_v2
 			string m = "00";
 			string s = "00";
 			foreach(string one in lastPlayeTime.Split(';')){
-				int nt = int.Parse(nowTime[num]);
-				int st = int.Parse(saveTime[num]);
-				int o = int.Parse(one);
-				int hp = int.Parse(h);
-				int mp = int.Parse(m);
-				if(num == 0){
-					if(nt >= st){
-						h = (o + (nt - st)).ToString();
-					}else{
-						h = (o + (24 - st + nt)).ToString();
+				int nt;
+				int st;
+				int o;
+				int hp;
+				int mp;
+				if(int.TryParse(nowTime[num], out nt) && int.TryParse(saveTime[num], out st) && int.TryParse(one, out o) && int.TryParse(h, out hp) && int.TryParse(m, out mp)){
+					if(num == 0){
+						if(nt >= st){
+							h = (o + (nt - st)).ToString();
+						}else{
+							h = (o + (24 - st + nt)).ToString();
+						}
+					}else if(num == 1){
+						if(nt >= st){
+							m = (o + (nt - st)).ToString();
+						}else{
+							m = (o + (60 - st + nt)).ToString();
+							h = (hp - 1).ToString();
+						}
+					}else if(num == 2){
+						if(nt >= st){
+							s = (o + (nt - st)).ToString();
+						}else{
+							s = (o + (60 - st + nt)).ToString();
+							m = (mp - 1).ToString();
+						}
 					}
-				}else if(num == 1){
-					if(nt >= st){
-						m = (o + (nt - st)).ToString();
-					}else{
-						m = (o + (60 - st + nt)).ToString();
-						h = (hp - 1).ToString();
-					}
-				}else if(num == 2){
-					if(nt >= st){
-						s = (o + (nt - st)).ToString();
-					}else{
-						s = (o + (60 - st + nt)).ToString();
-						m = (mp - 1).ToString();
-					}
+					num++;
+					return (h + ";" + m + ";" + s);
 				}
-				num++;
 			}
-			return (h + ";" + m + ";" + s);
+			return string.Empty;
 		}
 		void ToolStripMenuItem1Click(object sender, EventArgs e)
 		{
@@ -302,42 +310,80 @@ namespace GameBox_v2
 		{
 			LauncherContent();
 		}
-		void LauncherContent(){
-			foreach(Control a in flowLayoutPanel1.Controls){
-				int sets = int.Parse(a.Tag.ToString());
-				if(datas.Count > sets){
-					if(datas[sets] != null && datas[sets] != "" && datas[sets] != " " && datas[sets] != string.Empty){
-						int num = 0;
-						foreach(string s in datas[sets].Split(sep, StringSplitOptions.RemoveEmptyEntries)){num++;}
-						if(num == 2){
-							datas[sets] += "|" + a.Name + "|";
-						}else if(num == 1){
-							datas[sets] += "|" +"00;00;00" + "||" + a.Name + "|";
-						}else if(num <= 0){
-							datas[sets] = "|" + NameCleaner(a.GetChildAtPoint(new Point(0,0)).Text) + "||" + "00;00;00" + "||" + a.Name + "|";
-						}
-					}else{
-						datas[sets] = "|" + NameCleaner(a.GetChildAtPoint(new Point(0,0)).Text) + "||" + "00;00;00" + "||" + a.Name+ "|";
-					}
-				}else{
-					for(int i = datas.Count; i <= sets; i++){
-						if(datas.Count <= i){
-							if(i == sets){
-								datas.Add("|" + NameCleaner(a.GetChildAtPoint(new Point(0,0)).Text) + "||" + "00;00;00" + "||" + a.Name + "|");
-							}else{
-								datas.Add("");
+		public void LauncherContent(int id = -1){
+			if(id == -1){
+				foreach(Control a in flowLayoutPanel1.Controls){
+					int sets = int.Parse(a.Tag.ToString());
+					if(datas.Count > sets){
+						if(datas[sets] != null && datas[sets] != "" && datas[sets] != " " && datas[sets] != string.Empty){
+							int num = 0;
+							foreach(string s in datas[sets].Split(sep, StringSplitOptions.RemoveEmptyEntries)){num++;}
+							if(num == 2){
+								datas[sets] += "|" + a.Name + "|";
+							}else if(num == 1){
+								datas[sets] += "|" +"00;00;00" + "||" + a.Name + "|";
+							}else if(num <= 0){
+								datas[sets] = "|" + a.GetChildAtPoint(new Point(0,0)).Text + "||" + "00;00;00" + "||" + a.Name + "|";
 							}
 						}else{
-							if(i == sets){
-								datas[i] = "|" + NameCleaner(a.GetChildAtPoint(new Point(0,0)).Text) + "||" + "00;00;00" + "||" + a.Name+ "|";
+							datas[sets] = "|" + a.GetChildAtPoint(new Point(0,0)).Text + "||" + "00;00;00" + "||" + a.Name+ "|";
+						}
+					}else{
+						for(int i = datas.Count; i <= sets; i++){
+							if(datas.Count <= i){
+								if(i == sets){
+									datas.Add("|" + a.GetChildAtPoint(new Point(0,0)).Text + "||" + "00;00;00" + "||" + a.Name + "|");
+								}else{
+									datas.Add("");
+								}
 							}else{
-								datas[i] = "";
+								if(i == sets){
+									datas[i] = "|" + a.GetChildAtPoint(new Point(0,0)).Text + "||" + "00;00;00" + "||" + a.Name+ "|";
+								}else{
+									datas[i] = "";
+								}
 							}
 						}
 					}
 				}
+				SaveData();
+			}else{
+				if(id < flowLayoutPanel1.Controls.Count & id >= 0){
+					Control a = flowLayoutPanel1.Controls[id];
+					if(datas.Count > id){
+						if(datas[id] != null && datas[id] != "" && datas[id] != " " && datas[id] != string.Empty){
+							int num = 0;
+							foreach(string s in datas[id].Split(sep, StringSplitOptions.RemoveEmptyEntries)){num++;}
+							if(num == 2){
+								datas[id] += "|" + a.Name + "|";
+							}else if(num == 1){
+								datas[id] += "|" +"00;00;00" + "||" + a.Name + "|";
+							}else if(num <= 0){
+								datas[id] = "|" + a.GetChildAtPoint(new Point(0,0)).Text + "||" + "00;00;00" + "||" + a.Name + "|";
+							}
+						}else{
+							datas[id] = "|" + a.GetChildAtPoint(new Point(0,0)).Text + "||" + "00;00;00" + "||" + a.Name+ "|";
+						}
+					}else{
+						for(int i = datas.Count; i <= id; i++){
+							if(datas.Count <= i){
+								if(i == id){
+									datas.Add("|" + a.GetChildAtPoint(new Point(0,0)).Text + "||" + "00;00;00" + "||" + a.Name + "|");
+								}else{
+									datas.Add("");
+								}
+							}else{
+								if(i == id){
+									datas[i] = "|" + a.GetChildAtPoint(new Point(0,0)).Text + "||" + "00;00;00" + "||" + a.Name+ "|";
+								}else{
+									datas[i] = "";
+								}
+							}
+						}
+					}
+					SaveData();
+				}
 			}
-			SaveData();
 		}
 		void FlowLayoutPanel1Paint(object sender, PaintEventArgs e)
 		{
@@ -385,6 +431,43 @@ namespace GameBox_v2
 		void Label2Click(object sender, EventArgs e)
 		{
 	
+		}
+		public void GameReload(){
+			if(flowLayoutPanel1.Controls.Count > 0){ flowLayoutPanel1.Controls.Clear(); }
+			for(int g = 0; g < datas.Count; g++){
+				string a = "";
+				int num = 0;
+				if(datas[g] != null){
+					foreach(string d in datas[g].Split(sep, StringSplitOptions.RemoveEmptyEntries)){
+						if(num == 2){
+							a = d;
+						}
+						num ++;
+					}
+				}
+				if(a != "" && a != " " && a != null && a != string.Empty){
+					if(File.Exists(a)){
+						additem(a, g);
+					}
+				}
+			}
+		}
+		void ToolStripMenuItem2Click(object sender, EventArgs e)
+		{
+			int id;
+			if(int.TryParse(current_item.Tag.ToString(), out id)){
+				if(new NameField(current_item_name).ShowDialog() == DialogResult.OK){
+					if(flowLayoutPanel1.Controls[id].GetChildAtPoint(new Point(0,0)).Text.Contains(current_item_name)){
+						flowLayoutPanel1.Controls[id].GetChildAtPoint(new Point(0,0)).Text = NameField.name;
+						if(id < datas.Count && id != -1){
+							int pos = datas[id].IndexOf(current_item_name);
+							datas[id] = datas[id].Substring(0, pos).Replace(current_item_name, NameField.name);
+							LauncherContent();
+							GameReload();
+						}
+					}
+				}
+			}
 		}
 	}
 }

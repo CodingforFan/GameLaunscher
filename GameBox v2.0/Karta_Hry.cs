@@ -49,42 +49,49 @@ namespace GameBox_v2
 						label1.Text = G_Name;
 					}
 					if(webText != ""){
-						int posS = webText.IndexOf("<img src=\"/obrazky/hry_krabice/");
-						string myCapturedText = webText.Substring(posS, webText.IndexOf('>',posS) - posS + 1).Remove(0, 10);
-						int pos = myCapturedText.IndexOf("?_");
-						img_utl = "https://www.databaze-her.cz" + myCapturedText.Remove(pos, (myCapturedText.Length - pos));
-						pictureBox1.Load(img_utl);
-						
-						posS = webText.IndexOf("<div id=\"game-description\"");
-						myCapturedText = webText.Substring(posS, webText.IndexOf("</div>",posS) - posS).Remove(0, 10);
-						pos = myCapturedText.IndexOf('>', 0);
-						label2.Text = myCapturedText.Remove(0, pos + 1);
-						for(;label2.Text.Contains("<") && label2.Text.Contains(">");){
-							int pos2 = label2.Text.IndexOf('<');
-							int pos3 = label2.Text.IndexOf('>')  + 1 - pos2;
-							label2.Text = label2.Text.Remove(pos2, pos3);
-						}	
+						if(webText.IndexOf("<h1>Stránka nenalezena</h1>") == -1 || webText != null || webText != "" || webText != " " || webText != string.Empty){
+							int posS = webText.IndexOf("<img src=\"/obrazky/hry_krabice/");
+							string myCapturedText = webText.Substring(posS, webText.IndexOf('>',posS) - posS + 1).Remove(0, 10);
+							int pos = myCapturedText.IndexOf("?_");
+							img_utl = "https://www.databaze-her.cz" + myCapturedText.Remove(pos, (myCapturedText.Length - pos));
+							pictureBox1.Load(img_utl);
+							
+							posS = webText.IndexOf("<div id=\"game-description\"");
+							myCapturedText = webText.Substring(posS, webText.IndexOf("</div>",posS) - posS).Remove(0, 10);
+							pos = myCapturedText.IndexOf('>', 0);
+							label2.Text = myCapturedText.Remove(0, pos + 1);
+							for(;label2.Text.Contains("<") && label2.Text.Contains(">");){
+								int pos2 = label2.Text.IndexOf('<');
+								int pos3 = label2.Text.IndexOf('>')  + 1 - pos2;
+								label2.Text = label2.Text.Remove(pos2, pos3);
+							}	
+						}else{
+							throw new Exception("");
+						}
+					}else{
+						throw new Exception("");
 					}
 					tryAgain = false;
 				}catch{
 					if(new NameField(G_Name).ShowDialog() == DialogResult.OK){
 						for(int i = 0; i < MainForm.frm.flowLayoutPanel1.Controls.Count; i++){
-							if(MainForm.frm.flowLayoutPanel1.Controls[i].Name.Contains(G_Name)){
+							if(MainForm.frm.flowLayoutPanel1.Controls[i].GetChildAtPoint(new Point(0,0)).Text.Contains(G_Name)){
 								MainForm.frm.flowLayoutPanel1.Controls[i].GetChildAtPoint(new Point(0,0)).Text = NameField.name;
-								int id = int.Parse(MainForm.frm.flowLayoutPanel1.Controls[i].Tag.ToString());
-								MessageBox.Show(id.ToString());
-								if(id < MainForm.frm.datas.Count){
-									int pos = MainForm.frm.datas[id].IndexOf(G_Name);
-									MainForm.frm.datas[id] = MainForm.frm.datas[id].Substring(0, pos).Replace(G_Name, NameField.name);
-									MainForm.frm.SaveData();
-									MessageBox.Show("save! ");
+								int id = -1;
+								if(int.TryParse(MainForm.frm.flowLayoutPanel1.Controls[i].Tag.ToString(),out id)){
+									if(id < MainForm.frm.datas.Count && id != -1){
+										int pos = MainForm.frm.datas[id].IndexOf(G_Name);
+										MainForm.frm.datas[id] = MainForm.frm.datas[id].Substring(0, pos).Replace(G_Name, NameField.name);
+										MainForm.frm.LauncherContent();
+										MainForm.frm.GameReload();
+									}
 								}
 							}
 						}
 						G_Name = NameField.name;
 					}else{
 						tryAgain = false;
-						this.Hide();
+						this.Close();
 					}
 				}
 			}
@@ -97,10 +104,10 @@ namespace GameBox_v2
 		
 		void DownloadImageToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			MessageBox.Show(G_Name);
 			using(System.Net.WebClient client = new System.Net.WebClient())
 			{
    				client.DownloadFile(img_utl, "./coverlib/" + G_Name + img_utl.Substring(img_utl.Length - 4));
+   				MainForm.frm.GameReload();
 			}
 		}
 		void Karta_HryMouseDown(object sender, MouseEventArgs e)

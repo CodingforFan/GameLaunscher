@@ -23,6 +23,7 @@ namespace GameBox_v2
 		private System.Windows.Forms.ToolStripMenuItem změnitObrázekToolStripMenuItem;
 		private System.Windows.Forms.OpenFileDialog openFileDialog2;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -54,6 +55,7 @@ namespace GameBox_v2
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.změnitObrázekToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
 			this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
 			this.contextMenuStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -79,10 +81,11 @@ namespace GameBox_v2
 			this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 			| System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
+			this.flowLayoutPanel1.AutoScroll = true;
 			this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 47);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
 			this.flowLayoutPanel1.Size = new System.Drawing.Size(786, 240);
-			this.flowLayoutPanel1.TabIndex = 1;
+			this.flowLayoutPanel1.TabIndex = 0;
 			this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.FlowLayoutPanel1Paint);
 			// 
 			// update
@@ -106,9 +109,10 @@ namespace GameBox_v2
 			// 
 			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.změnitObrázekToolStripMenuItem,
-			this.toolStripMenuItem1});
+			this.toolStripMenuItem1,
+			this.toolStripMenuItem2});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(157, 48);
+			this.contextMenuStrip1.Size = new System.Drawing.Size(157, 70);
 			// 
 			// změnitObrázekToolStripMenuItem
 			// 
@@ -123,6 +127,13 @@ namespace GameBox_v2
 			this.toolStripMenuItem1.Size = new System.Drawing.Size(156, 22);
 			this.toolStripMenuItem1.Text = "Informace";
 			this.toolStripMenuItem1.Click += new System.EventHandler(this.ToolStripMenuItem1Click);
+			// 
+			// toolStripMenuItem2
+			// 
+			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+			this.toolStripMenuItem2.Size = new System.Drawing.Size(156, 22);
+			this.toolStripMenuItem2.Text = "Přejmenovat";
+			this.toolStripMenuItem2.Click += new System.EventHandler(this.ToolStripMenuItem2Click);
 			// 
 			// openFileDialog2
 			// 
