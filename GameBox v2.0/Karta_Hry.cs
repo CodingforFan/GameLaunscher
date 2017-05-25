@@ -110,9 +110,7 @@ namespace GameBox_v2
 			using(System.Net.WebClient client = new System.Net.WebClient())
 			{
    				client.DownloadFile(img_utl, "./coverlib/" + G_Name + img_utl.Substring(img_utl.Length - 4));
-   				if(client.DownloadDataCompleted()){
-   					MainForm.frm.GameReload();
-   				}
+   				MainForm.frm.GameReload();
 			}
 		}
 		void Karta_HryMouseDown(object sender, MouseEventArgs e)
