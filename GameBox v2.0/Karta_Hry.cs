@@ -104,10 +104,15 @@ namespace GameBox_v2
 		
 		void DownloadImageToolStripMenuItemClick(object sender, EventArgs e)
 		{
+			if(!System.IO.Directory.Exists("./coverlib")){
+				System.IO.Directory.CreateDirectory("./coverlib");
+			}
 			using(System.Net.WebClient client = new System.Net.WebClient())
 			{
    				client.DownloadFile(img_utl, "./coverlib/" + G_Name + img_utl.Substring(img_utl.Length - 4));
-   				MainForm.frm.GameReload();
+   				if(client.DownloadDataCompleted()){
+   					MainForm.frm.GameReload();
+   				}
 			}
 		}
 		void Karta_HryMouseDown(object sender, MouseEventArgs e)
