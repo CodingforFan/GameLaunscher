@@ -469,5 +469,9 @@ namespace GameBox_v2
 				}
 			}
 		}
+		void TreeView1AfterSelect(object sender, TreeViewEventArgs e)
+		{
+	
+		}
 	}
 }
