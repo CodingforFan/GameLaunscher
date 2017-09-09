@@ -73,8 +73,8 @@ namespace GameBox_v2
 					}
 					tryAgain = false;
 				}catch{
-					if(new NameField(G_Name).ShowDialog() == DialogResult.OK){
-						for(int i = 0; i < MainForm.frm.flowLayoutPanel1.Controls.Count; i++){
+					/*if(new NameField(G_Name).ShowDialog() == DialogResult.OK){
+						for(int i = 0; i < treeView1.Nodes[0].Nodes.Count; i++){
 							if(MainForm.frm.flowLayoutPanel1.Controls[i].GetChildAtPoint(new Point(0,0)).Text.Contains(G_Name)){
 								MainForm.frm.flowLayoutPanel1.Controls[i].GetChildAtPoint(new Point(0,0)).Text = NameField.name;
 								int id = -1;
@@ -92,7 +92,7 @@ namespace GameBox_v2
 					}else{
 						tryAgain = false;
 						this.Close();
-					}
+					}*/
 				}
 			}
 		}
@@ -110,7 +110,7 @@ namespace GameBox_v2
 			using(System.Net.WebClient client = new System.Net.WebClient())
 			{
    				client.DownloadFile(img_utl, "./coverlib/" + G_Name + img_utl.Substring(img_utl.Length - 4));
-   				MainForm.frm.GameReload();
+   				MainForm.frm.GameReload(0);
 			}
 		}
 		void Karta_HryMouseDown(object sender, MouseEventArgs e)

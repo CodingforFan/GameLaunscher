@@ -22,8 +22,9 @@ namespace GameBox_v2
 	public partial class MainForm : Form
 	{		
 		static string current_item_name = null;
-		static Control current_item = null;
+		static TreeNode current_item = null;
 		public List <string> datas = new List<string>();
+		public int treeNodeClass = -1;
 		public StreamReader sr;
 		public StreamWriter sw;
 		public List <string> saveTime;
@@ -48,19 +49,22 @@ namespace GameBox_v2
 		}
 		void MainFormLoad(object sender, EventArgs e)
 		{
+			if(treeView1.Nodes.Count <= 0){
+				treeView1.Nodes.Add("Hry");
+				treeNodeClass = 0;
+			}
 			frm = this;
 			datas = new List<string>();
 			if(File.Exists("./config/datalib.glconfig")){
-				int countLines = File.ReadAllLines("./config/datalib.glconfig").Length;
 				try{sr.Close();}catch{}
 				sr = new StreamReader("./config/datalib.glconfig");
 				if(sr.ReadToEnd().Length > 0){
-					try{sr.Close();}catch{}
-					sr = new StreamReader("./config/datalib.glconfig");
-					for(int i = 0; i < countLines; i++){
-						datas.Add(sr.ReadLine());
+					foreach(string line in File.ReadAllLines("./config/datalib.glconfig")){
+						datas.Add(line);
 					}
-					GameReload();
+					for(int i = 0; i < treeView1.Nodes.Count; i++){
+						GameReload(i);
+					}
 				}
 				try{sr.Close();}catch{}
 			}else{
@@ -71,28 +75,38 @@ namespace GameBox_v2
 				datas = new List<string>();
 			}
 		}
-		void Button1Click(object sender, EventArgs e)
-		{
-			openFileDialog1.ShowDialog();
-		}
 		void OpenFileDialog1FileOk(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			foreach(string a in openFileDialog1.FileNames)
 			{
 				try{
-					additem(a);
+					additem(a,treeNodeClass);
 				}catch{
 					MessageBox.Show("Game cannot add " + NameCleaner(Path.GetFileNameWithoutExtension(a)));
 				}
 			}
 		}
 		void additem (string a, int ids = -1){
-			if(flowLayoutPanel1.Controls.Count > 0){
-				foreach (Control c1 in flowLayoutPanel1.Controls) {
-					if (c1.Name.Contains(a)){
-						goto pidano;
+			if(treeView1.Nodes.Count > 0){
+				if(ids != -1){
+					foreach(TreeNode c2 in treeView1.Nodes[ids].Nodes){
+						if (c2.Name.Contains(a)){
+							goto pidano;
+						}
+					}
+				}else{
+					foreach(TreeNode c1 in treeView1.Nodes){
+						foreach(TreeNode c2 in c1.Nodes){
+							if (c2.Name.Contains(a)){
+								goto pidano;
+							}
+						}
 					}
 				}
+			}else{
+				treeView1.Nodes.Add("Hry");
+				treeNodeClass = 0;
+				ids = 0;
 			}
 			if(a.Contains(".exe")){
 				string name = "";
@@ -114,29 +128,21 @@ namespace GameBox_v2
 						name = datas[ids].Split(sep, StringSplitOptions.RemoveEmptyEntries)[0];
 					}
 				}
-				Image ii = Icon.ExtractAssociatedIcon(a).ToBitmap();
-				if (File.Exists("./coverlib/" + name + ".png" )){
-					ii = Image.FromFile("./coverlib/" + name + ".png" );
-				} else if (File.Exists("./coverlib/" + name + ".jpg" )){
-					ii = Image.FromFile("./coverlib/" + name + ".jpg" );
-				} else if (File.Exists("./coverlib/" + name + ".gif" )){
-					ii = Image.FromFile("./coverlib/" + name + ".gif" );
+				int loclaId;
+				if(ids != -1){
+					loclaId = ids;
+				}else{
+					loclaId = 0;
 				}
-				PictureBox pb = new PictureBox {Name = a,Size = new Size(180,254),BackgroundImageLayout = ImageLayout.Zoom, BackgroundImage = ii};
-				pb.MouseClick += Item_Click;
-				Label lb = new Label {Name = a, Text = name};
-				lb.MouseClick += Item_Click;
-				lb.Font = new Font(new FontFamily("Arial"), 10,FontStyle.Bold);
-				lb.TextAlign = ContentAlignment.MiddleCenter;
-				lb.Location = new Point(0,0);
-				lb.Size = new Size(180,35);
-				lb.AutoEllipsis = true;
-				lb.BackColor = Color.Transparent;
-				pb.Controls.Add(lb);
-				pb.Tag = flowLayoutPanel1.Controls.Count.ToString();				
-				flowLayoutPanel1.Controls.Add(pb);
+				treeView1.Nodes[loclaId].Nodes.Add(name);
+				TreeNode treeNode = treeView1.Nodes[loclaId].Nodes[treeView1.Nodes[loclaId].Nodes.Count - 1];
+				if (!File.Exists("./coverlib/" + name + ".png" )){
+					Icon.ExtractAssociatedIcon(a).ToBitmap().Save("./coverlib/" + name + ".png", System.Drawing.Imaging.ImageFormat.Png);
+				}
+				treeNode.Name = a;
+				treeNode.Tag = treeView1.Nodes[loclaId].Nodes.Count.ToString();
 				int id = -1;
-				if(int.TryParse(pb.Tag.ToString(), out id)){
+				if(int.TryParse(treeNode.Tag.ToString(), out id)){
 					LauncherContent(id);
 				}
 			}
@@ -145,38 +151,40 @@ namespace GameBox_v2
 			mustek:;
 		}
 		Control GetControlUnderMouse() {
-    		foreach ( Control c in flowLayoutPanel1.Controls ) {
-        		if ( c.Bounds.Contains(flowLayoutPanel1.PointToClient(MousePosition)) ) {
+    		foreach ( Control c in treeView1.Nodes[treeNodeClass].Nodes ) {
+        		if ( c.Bounds.Contains(treeView1.PointToClient(MousePosition)) ) {
 					return c;
 					
          		}
     		}
 			return null;
 		}
-		void Item_Click(object sender, MouseEventArgs e)
+		void Item_Click(object sender, TreeNodeMouseClickEventArgs e)
         {
-			current_item = GetControlUnderMouse();
-			current_item_name = current_item.Controls[0].Text;
-			
-			if (e.Button == MouseButtons.Left){
-					int locInt;
-					if(int.TryParse(current_item.Tag.ToString(), out locInt)){
-						try{
-							ButtonSet(Process.Start(current_item.Name), locInt);
-						}catch{
+			for(int i = 0; i < treeView1.Nodes.Count; i++){
+				if(treeView1.Nodes[i] == e.Node){
+					treeNodeClass = i;
+				}
+			}
+			if(e.Node.Name != treeView1.Nodes[treeNodeClass].Name){
+				current_item = e.Node;
+				current_item_name = current_item.Text;
+				
+				if (e.Button == MouseButtons.Left){
+						int locInt;
+						if(int.TryParse(current_item.Tag.ToString(), out locInt)){
+							try{
+								ButtonSet(Process.Start(current_item.Name), locInt);
+							}catch{
+							}
 						}
-					}
-			}else if (e.Button == MouseButtons.Right){
-				contextMenuStrip1.Show( MousePosition); 
-				//MessageBox.Show(GetControlUnderMouse().Name);
-				//new Karta_Hry(current_item_name).Show();
+				}
 			}
 		}
 		void UpdateTick(object sender, EventArgs e)
 		{
 			//CreateGraphics().DrawRectangle(new Pen(Color.Red, 1), new Rectangle(0, 0+30, Width-1, Height-31));
-			label2.Text = DateTime.Now.ToString("HH:mm");
-			label2.Location =  new Point((Width / 2) - (label2.Width/2), label2.Location.Y);
+			Text = DateTime.Now.ToString("HH:mm");
 		}
 		
 		public void ButtonSet(System.Diagnostics.Process processe, int ID){
@@ -196,7 +204,7 @@ namespace GameBox_v2
 			if(File.Exists(localfilenames)){
 				Directory.CreateDirectory("./coverlib");
 				File.Copy(openFileDialog2.FileName, "./coverlib/" + current_item_name + "." + localfilenames.Split('.')[1], true);
-				current_item.BackgroundImage = Image.FromFile("./coverlib/"+ current_item_name +"." + localfilenames.Split('.')[1]);
+				//current_item.BackgroundImage = Image.FromFile("./coverlib/"+ current_item_name +"." + localfilenames.Split('.')[1]);
     		}	
 		}
 		void ZměnitObrázekToolStripMenuItemClick(object sender, EventArgs e)
@@ -308,86 +316,47 @@ namespace GameBox_v2
 		}
 		void MainFormFormClosing(object sender, FormClosingEventArgs e)
 		{
-			LauncherContent();
+			for(int i = 0; i < treeView1.Nodes.Count; i++){
+				LauncherContent(i);
+			}
 		}
-		public void LauncherContent(int id = -1){
-			if(id == -1){
-				foreach(Control a in flowLayoutPanel1.Controls){
-					int sets = int.Parse(a.Tag.ToString());
-					if(datas.Count > sets){
-						if(datas[sets] != null && datas[sets] != "" && datas[sets] != " " && datas[sets] != string.Empty){
-							int num = 0;
-							foreach(string s in datas[sets].Split(sep, StringSplitOptions.RemoveEmptyEntries)){num++;}
-							if(num == 2){
-								datas[sets] += "|" + a.Name + "|";
-							}else if(num == 1){
-								datas[sets] += "|" +"00;00;00" + "||" + a.Name + "|";
-							}else if(num <= 0){
-								datas[sets] = "|" + a.GetChildAtPoint(new Point(0,0)).Text + "||" + "00;00;00" + "||" + a.Name + "|";
-							}
-						}else{
-							datas[sets] = "|" + a.GetChildAtPoint(new Point(0,0)).Text + "||" + "00;00;00" + "||" + a.Name+ "|";
+		public void LauncherContent(int id){
+			if(id < treeView1.Nodes.Count && id < treeView1.Nodes[id].Nodes.Count & id >= 0){
+				TreeNode a = treeView1.Nodes[id].Nodes[id];
+				if(datas.Count > id){
+					if(datas[id] != null && datas[id] != "" && datas[id] != " " && datas[id] != string.Empty){
+						int num = 0;
+						foreach(string s in datas[id].Split(sep, StringSplitOptions.RemoveEmptyEntries)){num++;}
+						if(num == 2){
+							datas[id] += "|" + a.Name + "|";
+						}else if(num == 1){
+							datas[id] += "|" +"00;00;00" + "||" + a.Name + "|";
+						}else if(num <= 0){
+							datas[id] = "|" + a.Text + "||" + "00;00;00" + "||" + a.Name + "|";
 						}
 					}else{
-						for(int i = datas.Count; i <= sets; i++){
-							if(datas.Count <= i){
-								if(i == sets){
-									datas.Add("|" + a.GetChildAtPoint(new Point(0,0)).Text + "||" + "00;00;00" + "||" + a.Name + "|");
-								}else{
-									datas.Add("");
-								}
+						datas[id] = "|" + a.Text + "||" + "00;00;00" + "||" + a.Name+ "|";
+					}
+				}else{
+					for(int i = datas.Count; i <= id; i++){
+						if(datas.Count <= i){
+							if(i == id){
+								datas.Add("|" + a.Text + "||" + "00;00;00" + "||" + a.Name + "|");
 							}else{
-								if(i == sets){
-									datas[i] = "|" + a.GetChildAtPoint(new Point(0,0)).Text + "||" + "00;00;00" + "||" + a.Name+ "|";
-								}else{
-									datas[i] = "";
-								}
+								datas.Add("");
+							}
+						}else{
+							if(i == id){
+								datas[i] = "|" + a.Text + "||" + "00;00;00" + "||" + a.Name+ "|";
+							}else{
+								datas[i] = "";
 							}
 						}
 					}
 				}
 				SaveData();
-			}else{
-				if(id < flowLayoutPanel1.Controls.Count & id >= 0){
-					Control a = flowLayoutPanel1.Controls[id];
-					if(datas.Count > id){
-						if(datas[id] != null && datas[id] != "" && datas[id] != " " && datas[id] != string.Empty){
-							int num = 0;
-							foreach(string s in datas[id].Split(sep, StringSplitOptions.RemoveEmptyEntries)){num++;}
-							if(num == 2){
-								datas[id] += "|" + a.Name + "|";
-							}else if(num == 1){
-								datas[id] += "|" +"00;00;00" + "||" + a.Name + "|";
-							}else if(num <= 0){
-								datas[id] = "|" + a.GetChildAtPoint(new Point(0,0)).Text + "||" + "00;00;00" + "||" + a.Name + "|";
-							}
-						}else{
-							datas[id] = "|" + a.GetChildAtPoint(new Point(0,0)).Text + "||" + "00;00;00" + "||" + a.Name+ "|";
-						}
-					}else{
-						for(int i = datas.Count; i <= id; i++){
-							if(datas.Count <= i){
-								if(i == id){
-									datas.Add("|" + a.GetChildAtPoint(new Point(0,0)).Text + "||" + "00;00;00" + "||" + a.Name + "|");
-								}else{
-									datas.Add("");
-								}
-							}else{
-								if(i == id){
-									datas[i] = "|" + a.GetChildAtPoint(new Point(0,0)).Text + "||" + "00;00;00" + "||" + a.Name+ "|";
-								}else{
-									datas[i] = "";
-								}
-							}
-						}
-					}
-					SaveData();
-				}
 			}
-		}
-		void FlowLayoutPanel1Paint(object sender, PaintEventArgs e)
-		{
-	
+
 		}
 		
 		string NameCleaner(string name){
@@ -432,8 +401,8 @@ namespace GameBox_v2
 		{
 	
 		}
-		public void GameReload(){
-			if(flowLayoutPanel1.Controls.Count > 0){ flowLayoutPanel1.Controls.Clear(); }
+		public void GameReload(int id){
+			if(treeView1.Nodes.Count > 0 && treeView1.Nodes[id].Nodes.Count > 0){ treeView1.Nodes[id].Nodes.Clear(); }
 			for(int g = 0; g < datas.Count; g++){
 				string a = "";
 				int num = 0;
@@ -447,7 +416,7 @@ namespace GameBox_v2
 				}
 				if(a != "" && a != " " && a != null && a != string.Empty){
 					if(File.Exists(a)){
-						additem(a, g);
+						additem(a);
 					}
 				}
 			}
@@ -457,21 +426,54 @@ namespace GameBox_v2
 			int id;
 			if(int.TryParse(current_item.Tag.ToString(), out id)){
 				if(new NameField(current_item_name).ShowDialog() == DialogResult.OK){
-					if(flowLayoutPanel1.Controls[id].GetChildAtPoint(new Point(0,0)).Text.Contains(current_item_name)){
-						flowLayoutPanel1.Controls[id].GetChildAtPoint(new Point(0,0)).Text = NameField.name;
+					if(current_item.Nodes[id].Text.Contains(current_item_name)){
+						current_item.Nodes[id].Text = NameField.name;
 						if(id < datas.Count && id != -1){
 							int pos = datas[id].IndexOf(current_item_name);
 							datas[id] = datas[id].Substring(0, pos).Replace(current_item_name, NameField.name);
-							LauncherContent();
-							GameReload();
+							LauncherContent(treeNodeClass);
+							GameReload(treeNodeClass);
 						}
 					}
 				}
 			}
 		}
-		void TreeView1AfterSelect(object sender, TreeViewEventArgs e)
+		void Item_Select(object sender, TreeNodeMouseClickEventArgs e)
+        {
+			for(int i = 0; i < treeView1.Nodes.Count; i++){
+				if(treeView1.Nodes[i] == e.Node){
+					treeNodeClass = i;
+				}
+			}
+			if(e.Node.Parent != null && e.Node.Name != e.Node.Parent.Name){
+				current_item = e.Node;
+				current_item_name = current_item.Text;
+				
+				if (e.Button == MouseButtons.Left){
+					foreach(Control control in tableLayoutPanel1.Controls){
+						if(control.Tag == "GameCard"){
+							tableLayoutPanel1.Controls.Remove(control);
+						}
+					}
+					Panel panel01 = new Panel{AutoScroll = true, Tag = "GameCard", Dock = DockStyle.Fill, Margin = new Padding(3,3,3,3)};
+					PictureBox pictureBox01 = new PictureBox{Dock = DockStyle.Top, BackgroundImageLayout = ImageLayout.Zoom, Size = new Size(panel01.Width,  250), Location = new Point(0,0)};
+					if (File.Exists("./coverlib/" + current_item.Text + ".png" )){
+						pictureBox01.BackgroundImage = Image.FromFile("./coverlib/" + current_item.Text + ".png" );
+					}
+					pictureBox01.Parent = panel01;
+					tableLayoutPanel1.Controls.Add(panel01);
+					tableLayoutPanel1.SetColumn(panel01 as Control,1);
+					tableLayoutPanel1.SetRow(panel01 as Control,0);
+				}
+			}else{
+				if (e.Button == MouseButtons.Right){
+					contextMenuStrip2.Show(MousePosition);
+				}
+			}
+		}
+		void ToolStripMenuItem3Click(object sender, EventArgs e)
 		{
-	
+			openFileDialog1.ShowDialog();
 		}
 	}
 }
