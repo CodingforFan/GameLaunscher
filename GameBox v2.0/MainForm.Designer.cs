@@ -137,7 +137,7 @@ namespace GameBox_v2
 			this.flowLayoutPanel1.Controls.Add(this.label2);
 			this.flowLayoutPanel1.Location = new System.Drawing.Point(165, 3);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-			this.flowLayoutPanel1.Size = new System.Drawing.Size(642, 293);
+			this.flowLayoutPanel1.Size = new System.Drawing.Size(642, 359);
 			this.flowLayoutPanel1.TabIndex = 0;
 			this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.FlowLayoutPanel1Paint);
 			// 
@@ -205,7 +205,7 @@ namespace GameBox_v2
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 1;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(810, 299);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(810, 365);
 			this.tableLayoutPanel1.TabIndex = 3;
 			// 
 			// panel1
@@ -215,12 +215,13 @@ namespace GameBox_v2
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(3, 3);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(156, 293);
+			this.panel1.Size = new System.Drawing.Size(156, 359);
 			this.panel1.TabIndex = 3;
 			// 
 			// treeView1
 			// 
-			this.treeView1.Location = new System.Drawing.Point(3, 30);
+			this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.treeView1.Location = new System.Drawing.Point(0, 20);
 			this.treeView1.Name = "treeView1";
 			treeNode1.Name = "Node8";
 			treeNode1.Text = "Node8";
@@ -279,22 +280,23 @@ namespace GameBox_v2
 			treeNode22,
 			treeNode23,
 			treeNode24});
-			this.treeView1.Size = new System.Drawing.Size(150, 260);
+			this.treeView1.Size = new System.Drawing.Size(156, 339);
 			this.treeView1.TabIndex = 4;
 			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeView1AfterSelect);
 			// 
 			// textBox1
 			// 
-			this.textBox1.Location = new System.Drawing.Point(3, 9);
+			this.textBox1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.textBox1.Location = new System.Drawing.Point(0, 0);
 			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(150, 20);
+			this.textBox1.Size = new System.Drawing.Size(156, 20);
 			this.textBox1.TabIndex = 1;
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(810, 299);
+			this.ClientSize = new System.Drawing.Size(810, 365);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Name = "MainForm";
 			this.Text = "GameBox v2.0";
