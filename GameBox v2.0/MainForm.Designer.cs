@@ -19,7 +19,6 @@ namespace GameBox_v2
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem změnitObrázekToolStripMenuItem;
 		private System.Windows.Forms.OpenFileDialog openFileDialog2;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		public System.Windows.Forms.TreeView treeView1;
@@ -54,7 +53,6 @@ namespace GameBox_v2
 			this.update = new System.Windows.Forms.Timer(this.components);
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.změnitObrázekToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
 			this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -86,10 +84,9 @@ namespace GameBox_v2
 			// 
 			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.změnitObrázekToolStripMenuItem,
-			this.toolStripMenuItem1,
 			this.toolStripMenuItem2});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(157, 70);
+			this.contextMenuStrip1.Size = new System.Drawing.Size(157, 48);
 			// 
 			// změnitObrázekToolStripMenuItem
 			// 
@@ -97,13 +94,6 @@ namespace GameBox_v2
 			this.změnitObrázekToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
 			this.změnitObrázekToolStripMenuItem.Text = "Změnit obrázek";
 			this.změnitObrázekToolStripMenuItem.Click += new System.EventHandler(this.ZměnitObrázekToolStripMenuItemClick);
-			// 
-			// toolStripMenuItem1
-			// 
-			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(156, 22);
-			this.toolStripMenuItem1.Text = "Informace";
-			this.toolStripMenuItem1.Click += new System.EventHandler(this.ToolStripMenuItem1Click);
 			// 
 			// toolStripMenuItem2
 			// 
@@ -155,6 +145,7 @@ namespace GameBox_v2
 			this.label2.Size = new System.Drawing.Size(155, 34);
 			this.label2.TabIndex = 5;
 			this.label2.Text = "Library";
+			this.label2.Click += new System.EventHandler(this.Label2Click);
 			// 
 			// treeView1
 			// 

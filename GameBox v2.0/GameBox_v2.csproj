@@ -71,10 +71,6 @@
     <Compile Include="NameField.Designer.cs">
       <DependentUpon>NameField.cs</DependentUpon>
     </Compile>
-    <Compile Include="Karta_Hry.cs" />
-    <Compile Include="Karta_Hry.Designer.cs">
-      <DependentUpon>Karta_Hry.cs</DependentUpon>
-    </Compile>
     <Compile Include="MainForm.cs" />
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
