@@ -24,9 +24,8 @@ namespace GameBox_v2
 		public System.Windows.Forms.TreeView treeView1;
 		private System.Windows.Forms.TextBox textBox1;
 		private System.Windows.Forms.Panel panel2;
-		private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
 		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Button button1;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -57,15 +56,13 @@ namespace GameBox_v2
 			this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.panel2 = new System.Windows.Forms.Panel();
+			this.button1 = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
 			this.treeView1 = new System.Windows.Forms.TreeView();
 			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip1.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.panel2.SuspendLayout();
-			this.contextMenuStrip2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// openFileDialog1
@@ -125,6 +122,7 @@ namespace GameBox_v2
 			// 
 			// panel2
 			// 
+			this.panel2.Controls.Add(this.button1);
 			this.panel2.Controls.Add(this.label2);
 			this.panel2.Controls.Add(this.treeView1);
 			this.panel2.Controls.Add(this.textBox1);
@@ -134,6 +132,19 @@ namespace GameBox_v2
 			this.panel2.Size = new System.Drawing.Size(156, 293);
 			this.panel2.TabIndex = 5;
 			// 
+			// button1
+			// 
+			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.button1.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+			this.button1.Location = new System.Drawing.Point(126, 28);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(30, 30);
+			this.button1.TabIndex = 6;
+			this.button1.Text = "+";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.Button1Click);
+			// 
 			// label2
 			// 
 			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -142,7 +153,7 @@ namespace GameBox_v2
 			this.label2.Location = new System.Drawing.Point(4, 25);
 			this.label2.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(155, 34);
+			this.label2.Size = new System.Drawing.Size(116, 34);
 			this.label2.TabIndex = 5;
 			this.label2.Text = "Library";
 			this.label2.Click += new System.EventHandler(this.Label2Click);
@@ -163,28 +174,16 @@ namespace GameBox_v2
 			// 
 			// textBox1
 			// 
+			this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.textBox1.Location = new System.Drawing.Point(0, 0);
+			this.textBox1.Location = new System.Drawing.Point(0, 3);
 			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(156, 22);
+			this.textBox1.Size = new System.Drawing.Size(153, 22);
 			this.textBox1.TabIndex = 1;
 			this.textBox1.Text = "Hledání...";
-			// 
-			// contextMenuStrip2
-			// 
-			this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.toolStripMenuItem3});
-			this.contextMenuStrip2.Name = "contextMenuStrip2";
-			this.contextMenuStrip2.Size = new System.Drawing.Size(127, 26);
-			// 
-			// toolStripMenuItem3
-			// 
-			this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-			this.toolStripMenuItem3.Size = new System.Drawing.Size(126, 22);
-			this.toolStripMenuItem3.Text = "Přidat hru";
-			this.toolStripMenuItem3.Click += new System.EventHandler(this.ToolStripMenuItem3Click);
 			// 
 			// MainForm
 			// 
@@ -203,7 +202,6 @@ namespace GameBox_v2
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.panel2.ResumeLayout(false);
 			this.panel2.PerformLayout();
-			this.contextMenuStrip2.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}

@@ -547,16 +547,7 @@ namespace GameBox_v2
 					treeView1.SelectedNode = e.Node;
 					contextMenuStrip1.Show(MousePosition);
 				}
-			}else{
-				if (e.Button == MouseButtons.Right){
-					contextMenuStrip2.Show(MousePosition);
-				}
 			}
-		}
-		void ToolStripMenuItem3Click(object sender, EventArgs e)
-		{
-			openFileDialog1.ShowDialog();
-			
 		}
 		
 		public bool saveWebData(string data, string name){
@@ -669,6 +660,10 @@ namespace GameBox_v2
 					}
 				}
 			}
+		}
+		void Button1Click(object sender, EventArgs e)
+		{
+			openFileDialog1.ShowDialog();
 		}
 	}
 }
