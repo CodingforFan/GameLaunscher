@@ -193,12 +193,47 @@ namespace GameBox_v2
 		void pictureBoxClick(object sender, MouseEventArgs e, PictureBox gamePictureBox)
         {
 			if (e.Button == MouseButtons.Left){
-					int locInt;
-					if(int.TryParse(gamePictureBox.Tag.ToString(), out locInt)){
-						try{
-							ButtonSet(Process.Start(gamePictureBox.Name), locInt);
-						}catch{}
+				for(int i = 0; i < treeView1.Nodes.Count; i++){
+					foreach(TreeNode treeNode in treeView1.Nodes[i].Nodes){
+						if(treeNode.Tag.ToString() == gamePictureBox.Tag.ToString()){
+							current_item = treeNode;
+							current_item_name = treeNode.Text;
+							treeNodeClass = i;
+						}
 					}
+				}
+				if(current_item != null){
+					foreach(Control control in tableLayoutPanel1.Controls){
+						if(control.Tag == "GameCard"){
+							tableLayoutPanel1.Controls.Remove(control);
+						}
+					}
+					Panel panel01 = new Panel{Tag = "GameCard", Dock = DockStyle.Fill};
+					PictureBox pictureBox01 = new PictureBox{Dock = DockStyle.Top, BackgroundImageLayout = ImageLayout.Zoom, Size = new Size(panel01.Width,  250), Location = new Point(0,0)};
+					if (File.Exists("./coverlib/" + current_item.Text + "_background.png")){
+						pictureBox01.BackgroundImage = Image.FromFile("./coverlib/" + current_item.Text + "_background.png");
+					}else if(File.Exists("./coverlib/" + current_item.Text + ".png")){
+						pictureBox01.BackgroundImage = Image.FromFile("./coverlib/" + current_item.Text + ".png");
+					}
+					pictureBox01.Parent = panel01;
+					Button gamePlayButton = new Button{Location = new Point(25, pictureBox01.Height + 25), Size = new Size(75,25), Text = "Spustit"};
+					gamePlayButton.MouseClick += new MouseEventHandler(gamePlay);
+					gamePlayButton.Parent = panel01;
+					int localNodeId;
+					if(int.TryParse(current_item.Tag.ToString(), out localNodeId)){
+						nodeId = localNodeId;
+					}
+					Panel panel02 = new Panel{AutoScroll = true, Dock = DockStyle.Bottom};
+					panel02.Parent = panel01;
+					Label gameLabel = new Label{Dock = DockStyle.Fill, Text = (gameWebSaveData.Count > nodeId ? gameWebSaveData[nodeId] : ""), BackColor = Color.Transparent};
+					gameLabel.Parent = panel02;
+					tableLayoutPanel1.Controls.Add(panel01);
+					tableLayoutPanel1.SetColumn(panel01 as Control,1);
+					tableLayoutPanel1.SetRow(panel01 as Control,0);
+					panel02.Size = new Size(panel01.Width, panel01.Height - gamePlayButton.Location.Y - 50);
+					treeView1.Select();
+					treeView1.SelectedNode = current_item;
+				}
 			}
 		}
 		void UpdateTick(object sender, EventArgs e)
