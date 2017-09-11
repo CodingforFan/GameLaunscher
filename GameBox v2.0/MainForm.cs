@@ -80,51 +80,47 @@ namespace GameBox_v2
 		
 		void OpenFileDialog1FileOk(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			try{
+			
 				foreach(string a in openFileDialog1.FileNames)
 				{
 					foreach(TreeNode c1 in treeView1.Nodes){
 						foreach(TreeNode c2 in c1.Nodes){
 							if (c2.Name.Contains(a)){
-								break;
+								goto noAdd;
 							}
 						}
 					}
 					additem(a);
-				}
-				for(int i = 0; i < treeView1.Nodes.Count; i++){
-					for(int g = 0; g < treeView1.Nodes[i].Nodes.Count; g++){
-						gameWebDataSave(treeView1.Nodes[i].Nodes[g]);
-						LauncherContent(i);
-					}
+					goto over;
+					noAdd: MessageBox.Show("Položka: " + NameCleaner(Path.GetFileName(a)) + " je již přidána!");
+					over:;
+					gameWebDataSave(treeView1.Nodes[treeNodeClass].Nodes[treeView1.Nodes[treeNodeClass].Nodes.Count - 1]);
+					LauncherContent(treeNodeClass);
 				}
 				AddAllGameAsPictureBox();
-			}catch{
-				MessageBox.Show("Toto není hra!");
-			}
+		
 		}
 		void additem (string a, int ids = -1){
-			if(treeView1.Nodes.Count <= 0){
-				treeView1.Nodes.Add("Hry");
-				treeNodeClass = 0;
-			}
-			if(a.Contains(".exe")){
-				string name = "";
-				FileVersionInfo fi = FileVersionInfo.GetVersionInfo(a);
+			string name = "";
+			bool named = true;
+			int num = 0;
+			Icon iconLocal;
+			FileVersionInfo fi = FileVersionInfo.GetVersionInfo(a);
+			if(a.Contains(".exe") && treeView1.Nodes.Count > treeNodeClass){
 				name = fi.ProductName;
-				if(name == "" || name == string.Empty || name == " " || name == null)
+				if(name == "" || name == string.Empty || name == " " || name == null){
 					name = Path.GetFileNameWithoutExtension(a);
-				bool named = true;
+				}
+				name = NameCleaner(name);
 				for(int i = 0; i < datas.Count; i++){
-					if(name.Contains(datas[i].Split(sep, StringSplitOptions.RemoveEmptyEntries)[0])){
-						named = false;
+					if(datas[i].Split(sep, StringSplitOptions.RemoveEmptyEntries)[0].Contains(name)){
+						num++;
 					}
 				}
-				if(named){
-					name = NameCleaner(name);
+				if(num != 0){
+					name = name + num;
 				}
-				if (ids != -1)
-				if (datas.Count > ids) {
+				if (datas.Count > ids && ids != -1) {
 					name = datas[ids].Split(sep, StringSplitOptions.RemoveEmptyEntries)[0];
 				}
 				treeView1.Nodes[treeNodeClass].Nodes.Add(name);
@@ -133,16 +129,13 @@ namespace GameBox_v2
 					Directory.CreateDirectory("./coverlib");
 				}
 				if (Directory.Exists("./coverlib")){
-					if (!File.Exists("./coverlib/" + name + ".png" )){
-						Icon.ExtractAssociatedIcon(a).ToBitmap().Save("./coverlib/" + name + ".png", System.Drawing.Imaging.ImageFormat.Png);
+					if (!File.Exists("./coverlib/" + name + ".png" ) && (iconLocal = Icon.ExtractAssociatedIcon(a)) != null){
+						try{iconLocal.ToBitmap().Save("./coverlib/" + name + ".png", System.Drawing.Imaging.ImageFormat.Png);}catch{Image.FromFile("SampImag.jpg").Save("./coverlib/" + name + ".png", System.Drawing.Imaging.ImageFormat.Png);}
 					}
 				}
 				treeNode.Name = a;
-				treeNode.Tag = treeView1.Nodes[treeNodeClass].Nodes.Count - 1;			
+				treeNode.Tag = treeView1.Nodes[treeNodeClass].Nodes.Count - 1;				
 			}
-			goto mustek;
-			pidano: MessageBox.Show("Položka: " + NameCleaner(Path.GetFileName(a)) + " je již přidána!");
-			mustek:;
 		}
 		Control GetControlUnderMouse() {
     		foreach ( Control c in treeView1.Nodes[treeNodeClass].Nodes ) {
@@ -346,28 +339,30 @@ namespace GameBox_v2
 		public void LauncherContent(int id){
 			if(id < treeView1.Nodes.Count && id >= 0){
 				foreach(TreeNode a in treeView1.Nodes[id].Nodes){
-					nodeId = int.Parse(a.Tag.ToString());
-					if(datas.Count > nodeId){
-						if(datas[nodeId] != null && datas[nodeId] != "" && datas[nodeId] != " " && datas[nodeId] != string.Empty){
-							int num = 0;
-							foreach(string s in datas[nodeId].Split(sep, StringSplitOptions.RemoveEmptyEntries)){num++;}
-							if(num == 2){
-								datas[nodeId] += "|" + a.Name + "|";
-							}else if(num == 1){
-								datas[nodeId] += "|" +"00;00;00" + "||" + a.Name + "|";
-							}else if(num <= 0){
-								datas[nodeId] = "|" + a.Text + "||" + "00;00;00" + "||" + a.Name + "|";
+					if(a.Tag != null){
+						nodeId = int.Parse(a.Tag.ToString());
+						if(datas.Count > nodeId){
+							if(datas[nodeId] != null && datas[nodeId] != "" && datas[nodeId] != " " && datas[nodeId] != string.Empty){
+								int num = 0;
+								foreach(string s in datas[nodeId].Split(sep, StringSplitOptions.RemoveEmptyEntries)){num++;}
+								if(num == 2){
+									datas[nodeId] += "|" + a.Name + "|";
+								}else if(num == 1){
+									datas[nodeId] += "|" +"00;00;00" + "||" + a.Name + "|";
+								}else if(num <= 0){
+									datas[nodeId] = "|" + a.Text + "||" + "00;00;00" + "||" + a.Name + "|";
+								}
+							}else{
+								datas[nodeId] = "|" + a.Text + "||" + "00;00;00" + "||" + a.Name+ "|";
 							}
 						}else{
-							datas[nodeId] = "|" + a.Text + "||" + "00;00;00" + "||" + a.Name+ "|";
-						}
-					}else{
-						for(int i = datas.Count; datas.Count <= nodeId; i++){
-							if(datas.Count <= i){
-								if(i == nodeId){
-									datas.Add("|" + a.Text + "||" + "00;00;00" + "||" + a.Name + "|");
-								}else{
-									datas.Add("");
+							for(int i = datas.Count; datas.Count <= nodeId; i++){
+								if(datas.Count <= i){
+									if(i == nodeId){
+										datas.Add("|" + a.Text + "||" + "00;00;00" + "||" + a.Name + "|");
+									}else{
+										datas.Add("");
+									}
 								}
 							}
 						}
@@ -380,8 +375,9 @@ namespace GameBox_v2
 		
 		string NameCleaner(string name){
 			string[] notText = {".exe","launcher","Launcher"};
-			string[] mezText = {"_","-",","};
-			string[,] spojText = {{"(","{","["},{")","}","]"}};
+			string[] mezText = {"_","-",",","™","®",":"};
+			string[] spojText1 = {"(","{","["};
+			string[] spojText2 = {")","}","]"};
 			int pos;
 			int pos2;
 			int num = 0;
@@ -395,10 +391,10 @@ namespace GameBox_v2
 					name = name.Replace(localText, " ");
 				}
 			}
-			foreach(string g in spojText){
+			foreach(string g in spojText1){
 				if((pos = name.IndexOf(g)) != -1){
-					if((pos2 = name.IndexOf(spojText[1,num], pos)) != -1){
-						name = name.Remove(pos - 1, pos2);
+					if((pos2 = name.IndexOf(spojText2[num], pos)) != -1){
+						name = name.Replace(name.Substring(pos, (pos2 + 1) - pos), "");
 					}
 				}
 				num++;
@@ -448,7 +444,7 @@ namespace GameBox_v2
 		public void GameReload(int id)
 		{
 			treeNodeClass = id;
-			if(treeView1.Nodes.Count > 0 && treeView1.Nodes[id].Nodes.Count > 0){ treeView1.Nodes[id].Nodes.Clear(); }
+			if(treeView1.Nodes.Count > 0 && treeView1.Nodes.Count > id && treeView1.Nodes[id].Nodes.Count > 0){ treeView1.Nodes[id].Nodes.Clear(); }
 			for(int g = 0; g < datas.Count; g++){
 				string a = "";
 				int num = 0;
@@ -456,6 +452,13 @@ namespace GameBox_v2
 					foreach(string d in datas[g].Split(sep, StringSplitOptions.RemoveEmptyEntries)){
 						if(num == 2){
 							a = d;
+						}else if(num == 0){
+							string all;
+							if(File.Exists("./data/"+ d +".GameData")){
+								if((all = File.ReadAllText("./data/"+ d +".GameData")) != null){
+									gameWebSaveData.Add(all);
+								}
+							}
 						}
 						num ++;
 					}
@@ -491,14 +494,10 @@ namespace GameBox_v2
 					}
 					datas[id] = datas[id].Substring(0, pos).Replace(current_item_name, NameField.name);
 					current_item.Text = NameField.name;
-					for(int i = 0; i < treeView1.Nodes.Count; i++){
-						LauncherContent(i);
-						for(int g = 0; g < treeView1.Nodes[i].Nodes.Count; g++){
-							gameWebDataSave(treeView1.Nodes[i].Nodes[g]);
-						}
-						LauncherContent(i);
-						GameReload(i);
-					}
+					LauncherContent(id);
+					gameWebDataSave(current_item);
+					LauncherContent(id);
+					GameReload(id);
 					AddAllGameAsPictureBox();
 				}
 			}
@@ -528,8 +527,10 @@ namespace GameBox_v2
 					}
 					Panel panel01 = new Panel{Tag = "GameCard", Dock = DockStyle.Fill};
 					PictureBox pictureBox01 = new PictureBox{Dock = DockStyle.Top, BackgroundImageLayout = ImageLayout.Zoom, Size = new Size(panel01.Width,  250), Location = new Point(0,0)};
-					if (File.Exists("./coverlib/" + current_item.Text + "_background.png" )){
-						pictureBox01.BackgroundImage = Image.FromFile("./coverlib/" + current_item.Text + "_background.png" );
+					if (File.Exists("./coverlib/" + current_item.Text + "_background.png")){
+						pictureBox01.BackgroundImage = Image.FromFile("./coverlib/" + current_item.Text + "_background.png");
+					}else if(File.Exists("./coverlib/" + current_item.Text + ".png")){
+						pictureBox01.BackgroundImage = Image.FromFile("./coverlib/" + current_item.Text + ".png");
 					}
 					pictureBox01.Parent = panel01;
 					Button gamePlayButton = new Button{Location = new Point(25, pictureBox01.Height + 25), Size = new Size(75,25), Text = "Spustit"};
@@ -640,26 +641,38 @@ namespace GameBox_v2
 						}
 						tryAgain = false;
 					}catch{
+						var num = 0;
 						NameField nameField = new NameField(nodeControl.Text);
-						if(nameField.ShowDialog() == DialogResult.OK){
+						var stat = nameField.ShowDialog();
+						var name = "";
+						if(stat == DialogResult.OK){
+							name = NameField.name;
+							for(int i = 0; i < datas.Count; i++){
+								if(datas[i].Split(sep, StringSplitOptions.RemoveEmptyEntries)[0].Contains(name)){
+									num++;
+								}
+							}
+							if(num != 0){
+								name = name + num;
+							}
 							for(int g = 0; g < datas.Count; g++){
 								int nameLenght = datas[g].Split(sep, StringSplitOptions.RemoveEmptyEntries)[0].Length + 2;
-								if(File.Exists("./coverlib/" + nodeControl.Text + ".png") && !File.Exists("./coverlib/" + NameField.name + ".png")){
-									File.Copy("./coverlib/" + nodeControl.Text + ".png", "./coverlib/" + NameField.name + ".png", true);
+								if(File.Exists("./coverlib/" + nodeControl.Text + ".png") && !File.Exists("./coverlib/" + name + ".png")){
+									File.Copy("./coverlib/" + nodeControl.Text + ".png", "./coverlib/" + name + ".png", true);
 									while(File.Exists("./coverlib/" + nodeControl.Text + ".png")){
-										File.Delete("./coverlib/" + nodeControl.Text + ".png");
+										try{ File.Delete("./coverlib/" + nodeControl.Text + ".png"); }catch{}
 									}
 								}
-								if(File.Exists("./data/" + nodeControl.Text + ".GameData") && !File.Exists("./data/" + NameField.name + ".GameData")){
-									File.Copy("./data/" + nodeControl.Text + ".GameData", "./data/" + NameField.name + ".GameData", true);
+								if(File.Exists("./data/" + nodeControl.Text + ".GameData") && !File.Exists("./data/" + name + ".GameData")){
+									File.Copy("./data/" + nodeControl.Text + ".GameData", "./data/" + name + ".GameData", true);
 									while(File.Exists("./data/" + nodeControl.Text + ".GameData")){
-										File.Delete("./data/" + nodeControl.Text + ".GameData");
+										try{ File.Delete("./data/" + nodeControl.Text + ".GameData"); }catch{}
 									}
 								}
 								datas[g] = datas[g].Substring(0, nameLenght).Replace(nodeControl.Text, NameField.name);
 							}
-							nodeControl.Text = NameField.name;
-						}else if(nameField.ShowDialog() == DialogResult.Cancel){
+							nodeControl.Text = name;
+						}else if(stat == DialogResult.Cancel){
 							tryAgain = false;
 						}
 					}
@@ -669,6 +682,36 @@ namespace GameBox_v2
 		void Button1Click(object sender, EventArgs e)
 		{
 			openFileDialog1.ShowDialog();
+		}
+		void ToolStripMenuItem1Click(object sender, EventArgs e)
+		{
+			foreach(Control con in tableLayoutPanel1.Controls){
+				if(con.Tag == "GameCard"){
+					tableLayoutPanel1.Controls.Remove(con);
+				}
+			}
+			treeView1.Nodes[treeNodeClass].Nodes.Clear();
+			if(File.Exists("./data/" + current_item.Text + ".GameData")){
+				try{ File.Delete("./data/" + current_item.Text + ".GameData"); }catch{}
+			}
+			if(File.Exists("./coverlib/" + current_item.Text + ".png")){
+				try{ File.Delete("./coverlib/" + current_item.Text + ".png"); }catch{}
+			}
+			if(File.Exists("./coverlib/" + current_item.Text + "_background.png")){
+				try{ File.Delete("./coverlib/" + current_item.Text + "_background.png"); }catch{}
+			}
+			for(int i = 0; i< datas.Count; i++){
+				if(datas[i].Split(sep, StringSplitOptions.RemoveEmptyEntries)[0] == current_item.Text){
+					datas.RemoveAt(i);
+					if(gameWebSaveData.Count > i){
+						gameWebSaveData.RemoveAt(i);
+					}
+					var num = 0;
+				}
+			}
+			LauncherContent(treeNodeClass);
+			GameReload(treeNodeClass);
+			AddAllGameAsPictureBox();
 		}
 	}
 }

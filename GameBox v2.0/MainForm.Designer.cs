@@ -26,6 +26,7 @@ namespace GameBox_v2
 		private System.Windows.Forms.Panel panel2;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -60,6 +61,7 @@ namespace GameBox_v2
 			this.label2 = new System.Windows.Forms.Label();
 			this.treeView1 = new System.Windows.Forms.TreeView();
 			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip1.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -81,9 +83,10 @@ namespace GameBox_v2
 			// 
 			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.změnitObrázekToolStripMenuItem,
-			this.toolStripMenuItem2});
+			this.toolStripMenuItem2,
+			this.toolStripMenuItem1});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(157, 48);
+			this.contextMenuStrip1.Size = new System.Drawing.Size(157, 92);
 			// 
 			// změnitObrázekToolStripMenuItem
 			// 
@@ -184,6 +187,13 @@ namespace GameBox_v2
 			this.textBox1.Size = new System.Drawing.Size(153, 22);
 			this.textBox1.TabIndex = 1;
 			this.textBox1.Text = "Hledání...";
+			// 
+			// toolStripMenuItem1
+			// 
+			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(156, 22);
+			this.toolStripMenuItem1.Text = "Odstranit";
+			this.toolStripMenuItem1.Click += new System.EventHandler(this.ToolStripMenuItem1Click);
 			// 
 			// MainForm
 			// 
