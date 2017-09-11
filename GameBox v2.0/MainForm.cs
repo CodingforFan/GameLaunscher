@@ -129,8 +129,13 @@ namespace GameBox_v2
 				}
 				treeView1.Nodes[treeNodeClass].Nodes.Add(name);
 				TreeNode treeNode = treeView1.Nodes[treeNodeClass].Nodes[treeView1.Nodes[treeNodeClass].Nodes.Count - 1];
-				if (!File.Exists("./coverlib/" + name + ".png" )){
-					Icon.ExtractAssociatedIcon(a).ToBitmap().Save("./coverlib/" + name + ".png", System.Drawing.Imaging.ImageFormat.Png);
+				if (!Directory.Exists("./coverlib")){
+					Directory.CreateDirectory("./coverlib");
+				}
+				if (Directory.Exists("./coverlib")){
+					if (!File.Exists("./coverlib/" + name + ".png" )){
+						Icon.ExtractAssociatedIcon(a).ToBitmap().Save("./coverlib/" + name + ".png", System.Drawing.Imaging.ImageFormat.Png);
+					}
 				}
 				treeNode.Name = a;
 				treeNode.Tag = treeView1.Nodes[treeNodeClass].Nodes.Count - 1;			
